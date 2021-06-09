@@ -17,7 +17,7 @@ function BoozeContextProvider({ children }) {
       .then(({ data }) => {
         setDrinksFeed(data)
       })
-      .catch(err => console.log('couldnt get drinks from server: ', err))
+      .catch(err => console.warn('couldnt get drinks from server: ', err))
   }
   // gets 10 mocktails from our api
   const mocktail10 = () => {
@@ -25,7 +25,7 @@ function BoozeContextProvider({ children }) {
       .then(({ data }) => {
         setDrinksFeed(data)
       })
-      .catch(err => console.log('couldnt get drinks from server: ', err))
+      .catch(err => console.warn('couldnt get drinks from server: ', err))
   }
 
   // this function gets passed down to DrinkView. DrinkView uses useParams() to get the drink id passed to it
@@ -51,7 +51,7 @@ function BoozeContextProvider({ children }) {
   const getCustomDrinks = () => {
     axios.get('/routes/custom')
       .then(({ data }) => {
-        console.log(data)
+        // console.log(data)
         setCustomDrinks(data)
       }).catch((err) => console.error(err))
   }
@@ -76,7 +76,7 @@ function BoozeContextProvider({ children }) {
           setSearchResults(data)
         }
       })
-      .catch(err => console.log('error fetching data from api in Context: ', err));
+      .catch(err => console.warn('error fetching data from api in Context: ', err));
   };
 
   const drinksProps = {

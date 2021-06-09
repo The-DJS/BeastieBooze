@@ -5,59 +5,47 @@ import Swal from 'sweetalert2';
 const UserContext = createContext();
 
 function UserContextProvider({ children }) {
+
   const [userInfo, setUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userCreations, setUserCreations] = useState([]);
-  const [favoriteDrinks, setFavoriteDrinks] = useState([]);
+  const [userCreations, setUserCreations] = useState([])
+  const [favoriteDrinks, setFavoriteDrinks] = useState([])
   const [isLegal, setIsLegal] = useState(null);
 
-  // useEffect(() => {
-  //   if (businessId) {
-  //     axios
-  //       .get(`/routes/businesses/${businessId}`)
-  //       .then(({ data: barInfo }) => {
-  //         //
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [userInfo]);
-
   const loginUser = (userData) => {
-    axios
-      .get('/routes/users', { params: userData })
+
+    axios.get('/routes/users', { params: userData })
       .then(({ data }) => {
         // console.log('===> userContext user response:', data)
         const { googleId, username, favorites, creations, businessId } = data;
-        setUserInfo({ googleId, username, favorites, creations, businessId });
-        setIsLoggedIn(true);
+        setUserInfo({ googleId, username, favorites, creations, businessId })
+        setIsLoggedIn(true)
 
         //lets set favorites by name
-        favorites.forEach((drink) => {
+        favorites.forEach(drink => {
           // let key = drink.strDrink ? drink.strDrink : drink.drinkName;
           let key = '';
 
           if (drink.strDrink) {
-            key = drink.strDrink;
+            key = drink.strDrink
           } else if (drink.drinkName) {
-            key = drink.drinkName;
+            key = drink.drinkName
           } else {
-            key = drink.name;
+            key = drink.name
           }
-          setFavoriteDrinks((prevFavs) => [...prevFavs, key]);
-        });
-      })
-      .then(
-        Swal.fire({
-          toast: true,
-          position: 'bottom-end',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          icon: 'success',
-          title: 'Signed in successfully',
+          setFavoriteDrinks(prevFavs => [...prevFavs, key])
         })
-      )
-      .catch((err) => console.log(err));
+      })
+      .then(Swal.fire({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        icon: 'success',
+        title: 'Signed in successfully'
+      }))
+      .catch(err => console.log(err));
   };
 
   const logoutUser = () => {
@@ -70,8 +58,8 @@ function UserContextProvider({ children }) {
       timer: 2000,
       timerProgressBar: true,
       icon: 'success',
-      title: 'Signed out successfully',
-    });
+      title: 'Signed out successfully'
+    })
   };
 
   const addCreation = (creationObj) => {
@@ -79,19 +67,15 @@ function UserContextProvider({ children }) {
     //to the database and add the creation to the database on
     //submit.
 
-    const { googleId } = userInfo;
+    const { googleId } = userInfo
 
     // we need to patch this into user db
-    axios
-      .patch(`/routes/users/custom/:id`, {
-        id: googleId,
-        creations: creationObj,
-      })
+    axios.patch(`/routes/users/custom/:id`, { id: googleId, creations: creationObj })
       .then(({ data }) => {
-        setUserInfo(data);
-      })
-      .catch((err) => console.error(err));
-  };
+        setUserInfo(data)
+      }).catch((err) => console.error(err))
+
+  }
 
   const toggleFavorite = (drink) => {
     // drink.favId = drink._id || drink.idDrink
@@ -99,45 +83,38 @@ function UserContextProvider({ children }) {
     let key = '';
 
     if (drink.strDrink) {
-      key = drink.strDrink;
+      key = drink.strDrink
     } else if (drink.drinkName) {
-      key = drink.drinkName;
+      key = drink.drinkName
     } else {
-      key = drink.name;
+      key = drink.name
     }
 
     if (favoriteDrinks.includes(key)) {
-      alert('You Have Already Favorited This Item');
+      alert('You Have Already Favorited This Item')
     } else {
-      setFavoriteDrinks((prevFavs) => [...prevFavs, key]);
-      const { googleId } = userInfo;
 
-      console.log(drink);
-      drink.favId = drink._id || drink.idDrink;
+      setFavoriteDrinks(prevFavs => [...prevFavs, key])
+      const { googleId } = userInfo
 
-      axios
-        .patch(`/routes/users/favorites/:id`, {
-          id: googleId,
-          favorites: drink,
-        })
+      console.log(drink)
+      drink.favId = drink._id || drink.idDrink
+
+      axios.patch(`/routes/users/favorites/:id`, { id: googleId, favorites: drink })
         .then(({ data }) => {
-          setUserInfo(data);
-        })
-        .catch((err) => console.error(err));
+          setUserInfo(data)
+        }).catch((err) => console.error(err))
     }
-  };
+  }
 
   const removeFavorite = (drink) => {
     //removes favorite
-    console.log('MADE IT TO REMOVE FAVORITES', drink);
-    drink.favId = drink._id || drink.idDrink;
-    const { googleId } = userInfo;
+    console.log('MADE IT TO REMOVE FAVORITES', drink)
+    drink.favId = drink._id || drink.idDrink
+    const { googleId } = userInfo
 
-    axios.patch(`/routes/users/favorites/delete/:favId`, {
-      favId: drink.favId,
-      googleId: googleId,
-    });
-  };
+    axios.patch(`/routes/users/favorites/delete/:favId`, { favId: drink.favId, googleId: googleId })
+  }
 
   const verifyAge = () => {
     Swal.fire({
@@ -148,11 +125,7 @@ function UserContextProvider({ children }) {
       denyButtonText: `No, I am underage`,
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
-        Swal.fire(
-          'You have access to alcoholic and non-alcoholic beverages.',
-          '',
-          'success'
-        );
+        Swal.fire('You have access to alcoholic and non-alcoholic beverages.', '', 'success');
         setIsLegal(true);
       } else {
         Swal.fire('You have access to non-alcoholic beverages.', '', 'info');
@@ -174,12 +147,14 @@ function UserContextProvider({ children }) {
     toggleFavorite,
     favoriteDrinks,
     isLegal,
-    verifyAge,
-  };
+    verifyAge
+  }
 
   return (
-    <UserContext.Provider value={userProps}>{children}</UserContext.Provider>
-  );
+    <UserContext.Provider value={userProps}>
+      {children}
+    </UserContext.Provider>
+  )
 }
 
 export { UserContextProvider, UserContext };

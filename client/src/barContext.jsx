@@ -11,22 +11,39 @@ const BarContextProvider = ({ children }) => {
   const [barName, setBarName] = useState('');
 
   // Contact info which holds address, phone, and email.
-  const [contactInformation, setContactInformation] = useState({
-    address,
-    phone,
-    email,
-  });
+  const [contactInformation, setContactInformation] = useState({});
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
+  // Update the independent phone, address, and email states when contactInfo state changes.
+  useEffect(() => {
+    const {
+      address,
+      phone,
+      email,
+    } = contactInformation;
+
+    setAddress(address);
+    setPhone(phone);
+    setEmail(email);
+  }, [contactInformation]);
+
   // Details holds hours of operation and a description.
-  const [details, setDetails] = useState({
-    hoursOfOperation,
-    description,
-  });
+  const [details, setDetails] = useState({});
   const [hoursOfOperation, setHoursOfOperation] = useState('');
   const [description, setDescription] = useState('');
+
+    // Update the independent phone, address, and email states when contactInfo state changes.
+    useEffect(() => {
+      const {
+        hoursOfOperation,
+        description
+      } = details;
+
+      setHoursOfOperation(hoursOfOperation);
+      setDescription(description);
+    }, [details]);
 
   const [bars, setBars] = useState([]);
 
@@ -47,13 +64,19 @@ const BarContextProvider = ({ children }) => {
     setShowForm(!showForm);
   };
 
+  // Set current bar when the userInfo state changes.
   const [currentBar, setCurrentBar] = useState(null);
   useEffect(() => {
     if (userInfo.businessId) {
       axios
         .get(`/routes/businesses/${userInfo.businessId}`)
-        .then(({ data: barInfo }) => setCurrentBar(barInfo))
-        .catch((err) => console.log(err));
+        .then(({ data: barInfo }) => {
+          setCurrentBar(barInfo);
+          setBarName(barInfo.name);
+          setContactInformation(barInfo.contactInformation);
+          setDetails(barInfo.details);
+        })
+        .catch((err) => console.log(err))
     }
   }, [userInfo]);
 
@@ -78,6 +101,7 @@ const BarContextProvider = ({ children }) => {
         toggleForm,
         bars,
         currentBar,
+        setCurrentBar,
       }}
     >
       {children}
