@@ -81,4 +81,8 @@ businessesRouter.delete('/', (req, res) => {
     .catch((err) => console.log(err));
 });
 
+businessesRouter.get('/', (req, res) => {
+
+})
+
 module.exports = { businessesRouter };

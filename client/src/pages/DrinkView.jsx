@@ -11,9 +11,10 @@ const DrinkView = () => {
   const [aDrink, setADrink] = useState({});
   const [isOpen, setOpen] = useState(false);
   const [tutorial, setTutorial] = useState();
-  const [bar, setBar] = useState([])
+  const [bars, setBars] = useState([])
   const [menu, setMenu] = useState({})
 
+  console.log(aDrink)
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
@@ -27,7 +28,7 @@ const DrinkView = () => {
       .get('/routes/businesses')
       .then(({data}) => {
         console.log(data, drinkId, 'yoyoyoyo')
-        setBar(data)
+        setBars(data)
         setMenu(data.menu[0])
       })
       .catch((err) => console.error('ERROR!', err, drinkId));
@@ -188,10 +189,12 @@ const DrinkView = () => {
           <br></br>
           <br></br>
           <h5>Bars</h5>
-          <h5>{bar.map(data => {
-            return (
-              <h5>{data.name}</h5>
-            )
+          <h5>{bars.map(bar => {
+            console.log(aDrink.strDrink)
+            console.log(bar.menu[0])
+            if(bar.menu.includes(aDrink.strDrink)){
+              return <p>{bar.name}</p>
+            }
           })}</h5>
         </div>
       </div>

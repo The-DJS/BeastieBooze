@@ -38,7 +38,7 @@ const DrinkSchema = new mongoose.Schema({
   ingredients: {},
   alcoholic: Boolean,
   createdBy: String,
-  soldAt: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
+  soldAt: [{ type: mongoose.Schema.Types.ObjectId,  default: [] }],
   //add a createdBy to the drinkSchema to link to Users once created
 });
 const BusinessSchema = new mongoose.Schema({
