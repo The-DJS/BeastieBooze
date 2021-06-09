@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './userContext';
 
@@ -51,7 +51,7 @@ const BarContextProvider = ({ children }) => {
   useEffect(() => {
     if (userInfo.businessId) {
       axios
-        .get(`/routes/businesses/${businessId}`)
+        .get(`/routes/businesses/${userInfo.businessId}`)
         .then(({ data: barInfo }) => {
           setCurrentBar(barInfo);
         })

@@ -2,33 +2,45 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ModalVideo from 'react-modal-video';
-
 import { BoozeContext } from '../boozeContext';
 import { UserContext } from '../userContext';
-
 import { ingredientParser } from '../../utils/parseIng';
-
 const DrinkView = () => {
   // useParams will grab the param passed in url. grabbing drinkId from params.
   const { drinkId } = useParams();
   const [aDrink, setADrink] = useState({});
   const [isOpen, setOpen] = useState(false);
   const [tutorial, setTutorial] = useState();
+  const [bar, setBar] = useState([])
+  const [menu, setMenu] = useState({})
 
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
       .then(({ data }) => {
+        console.log(data)
         setADrink(data.drinks[0]);
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
+
+      axios
+      .get('/routes/businesses')
+      .then(({data}) => {
+        console.log(data, drinkId, 'yoyoyoyo')
+        setBar(data)
+        setMenu(data.menu[0])
+      })
+      .catch((err) => console.error('ERROR!', err, drinkId));
   }, []);
 
   const ingredients = ingredientParser(aDrink);
-
-  const { isLoggedIn, favoriteDrinks, toggleFavorite, removeFavorite } =
-    useContext(UserContext);
-
+  const {
+    isLoggedIn,
+    favoriteDrinks,
+    toggleFavorite,
+    removeFavorite,
+    userInfo,
+  } = useContext(UserContext);
   // grab what we need from drink object, reassign names
   const {
     idDrink: id,
@@ -38,61 +50,59 @@ const DrinkView = () => {
     strGlass: glass,
     strInstructions: directions,
   } = aDrink;
-
   const removeFromMenu = () => {
     axios
       .delete('/routes/businesses/drink', {
         data: {
-          businessId: '60c0e5c5a022a6d97d9ea675',
+          businessId: userInfo.businessId,
           drinkObj: { name, directions, ingredients, alcoholic },
         },
       })
       .then(({ data: newMenu }) => console.log(newMenu))
       .catch((err) => console.log(err));
   };
-
   const removeFromMenuButton = () => {
     if (true) {
       return (
         <span className="remove-from-menu-button" onClick={removeFromMenu}>
-          <button type="button btn btn-primary">Remove from Menu</button>
+          <button type="button" className="btn btn-dark drink-view-btn">
+            Remove from Menu
+          </button>
         </span>
       );
     }
   };
-
   const addToMenu = () => {
     axios
       .post('/routes/businesses/drink', {
-        businessId: '60c0e5c5a022a6d97d9ea675', // extract from state
+        businessId: userInfo.businessId,
         drinkObj: { name, directions, ingredients, alcoholic },
       })
       .then(({ data: newMenu }) => console.log(newMenu))
       .catch((err) => console.log(err));
   };
-
   const addToMenuButton = () => {
     if (true) {
       return (
         <span className="add-to-menu-button" onClick={addToMenu}>
-          <button type="button btn btn-primary">Add to Menu</button>
+          <button type="button" className="btn btn-dark drink-view-btn">
+            Add to Menu
+          </button>
         </span>
       );
     }
   };
-
   const removeButton = () => {
     if (favoriteDrinks.includes(name)) {
       return (
         <span className="remove-button" onClick={() => removeFavorite(aDrink)}>
-          <button type="button" className="btn btn-danger">
+          <button type="button" className="btn btn-dark drink-view-btn">
             Remove from Favorites
           </button>
         </span>
       );
     }
   };
-
   const prepVideo = (title) => {
     setOpen(true);
     getVideo(title);
@@ -106,7 +116,6 @@ const DrinkView = () => {
       })
       .catch();
   };
-
   const youTube = () => {
     if (true) {
       return (
@@ -118,14 +127,16 @@ const DrinkView = () => {
             videoId={tutorial}
             onClose={() => setOpen(false)}
           />
-          <button className="trailer-button" onClick={() => prepVideo()}>
+          <button
+            className="btn btn-dark drink-view-btn"
+            onClick={() => prepVideo()}
+          >
             View Tutorial
           </button>
         </React.Fragment>
       );
     }
   };
-
   const userButtons = () => {
     if (isLoggedIn) {
       return (
@@ -134,7 +145,7 @@ const DrinkView = () => {
           <span className="drink-button">
             <button
               type="button"
-              className="btn btn-dark"
+              className="btn btn-dark drink-view-btn"
               onClick={() => {
                 toggleFavorite(aDrink);
               }}
@@ -150,7 +161,6 @@ const DrinkView = () => {
       );
     }
   };
-
   return (
     <div className="container">
       <h2 className="page-heading">{name}</h2>
@@ -177,10 +187,15 @@ const DrinkView = () => {
           {userButtons()}
           <br></br>
           <br></br>
+          <h5>Bars</h5>
+          <h5>{bar.map(data => {
+            return (
+              <h5>{data.name}</h5>
+            )
+          })}</h5>
         </div>
       </div>
     </div>
   );
 };
-
 export default DrinkView;
