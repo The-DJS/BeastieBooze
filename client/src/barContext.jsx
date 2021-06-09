@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './userContext';
 
@@ -52,9 +52,7 @@ const BarContextProvider = ({ children }) => {
     if (userInfo.businessId) {
       axios
         .get(`/routes/businesses/${userInfo.businessId}`)
-        .then(({ data: barInfo }) => {
-          setCurrentBar(barInfo);
-        })
+        .then(({ data: barInfo }) => setCurrentBar(barInfo))
         .catch((err) => console.log(err));
     }
   }, [userInfo]);
@@ -79,6 +77,7 @@ const BarContextProvider = ({ children }) => {
         showForm,
         toggleForm,
         bars,
+        currentBar,
       }}
     >
       {children}

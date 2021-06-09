@@ -194,3 +194,17 @@ a:hover {
 .menu-item-paragraph {
   margin: 0;
 }
+
+.drink-view-btn {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.drink-view-btn:first-of-type {
+  margin-top: 0;
+}
+
+/* .drink-view-btn:last-of-type {
+  margin-bottom: 0;
+} */

@@ -190,7 +190,6 @@ const removeMenuItem = async (businessId, drinkObj) => {
     return savedBusiness.menu;
   } catch (error) {
     throw error;
-    ``;
   }
 };
 
@@ -208,6 +207,46 @@ const getSingleBusinessInfo = async (businessId) => {
   return { ...business._doc, menu: mappedMenu };
 };
 
+const addTransaction = async (drinkId, businessId, quantity) => {
+  const business = await Business.findById(businessId);
+  if (!business) {
+    return 'business does not exist';
+  }
+  const drink = await Drink.findById(drinkId);
+  if (!drink) {
+    return 'drink does not exist';
+  }
+  const newTransaction = await new Transaction({
+    drinkId,
+    businessId,
+    quantity,
+    date: new Date(),
+  }).save();
+  if (!newTransaction) {
+    return 'save unsuccessful';
+  }
+  business.transactions = [...business.transactions, newTransaction._id];
+  await business.save();
+  return newTransaction;
+};
+
+const removeTransaction = async (transactionId) => {
+  const transaction = await Transaction.findById(transactionId);
+  if (!transaction) {
+    return false;
+  }
+  const business = await Business.findById(transaction.businessId);
+  if (!business) {
+    return false;
+  }
+  await Transaction.findByIdAndDelete(transactionId);
+  business.transactions = [...business.transactions].filter(
+    (id) => id.toString() !== transactionId
+  );
+  await business.save();
+  return true;
+};
+
 module.exports = {
   getUser,
   createUser,
@@ -220,4 +259,6 @@ module.exports = {
   getAllBusinesses,
   removeBusiness,
   getSingleBusinessInfo,
+  addTransaction,
+  removeTransaction,
 };

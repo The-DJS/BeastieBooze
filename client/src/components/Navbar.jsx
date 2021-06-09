@@ -64,6 +64,16 @@ const Navbar = () => {
               Businesses
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/pos" className="nav-link">
+              Point of Sale
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/reports">
+              Reports
+            </Link>
+          </li>
         </ul>
         {username ? (
           <li className="nav-item">

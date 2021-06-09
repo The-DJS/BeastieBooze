@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/BiscuitBae/BeastieBooze#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@hookform/resolvers": "^2.5.2",
     "@popperjs/core": "^2.9.2",
     "acorn-jsx": "^5.3.1",
@@ -39,6 +42,7 @@
     "react": "^16.0.2",
     "react-bootstrap": "^1.6.0",
     "react-dom": "^16.0.2",
+    "react-fontawesome": "^1.7.1",
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.7.1",
     "react-modal-video": "^1.2.7",

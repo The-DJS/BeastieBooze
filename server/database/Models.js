@@ -20,9 +20,9 @@ const uri = `mongodb+srv://DavidSosa20:${process.env.DATABASE_PASSWORD}@cluster0
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    // eslint-disable-next-line no-console
-    .then(() => console.log('connected to db'))
-    .catch();
+  // eslint-disable-next-line no-console
+  .then(() => console.log('connected to db'))
+  .catch();
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 const UserSchema = new mongoose.Schema({

@@ -18,7 +18,7 @@ const DrinkView = () => {
     axios
       .get(`/routes/drink/${drinkId}`)
       .then(({ data }) => {
-        console.log(data)
+        console.log(data, 'DATA!!!')
         setADrink(data.drinks[0]);
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
