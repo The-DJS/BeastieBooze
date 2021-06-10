@@ -198,7 +198,7 @@ const DrinkView = () => {
             console.log(aDrink.strDrink)
             console.log(bar.menu[0])
             console.log(bar)
-            if (bar.menu.includes(aDrink.strDrink)) {
+            // if (bar.menu.includes(aDrink.strDrink)) {
               return (
                 <li>
 
@@ -212,7 +212,7 @@ const DrinkView = () => {
                 </li>
               )
               }
-          })}</h5>
+          )}</h5>
         </div>
       </div>
     </div>

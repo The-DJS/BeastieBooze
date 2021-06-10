@@ -12,6 +12,7 @@ const Navbar = () => {
   //* links to endpoints that will be handled by Routes in App component
   const { userInfo, isLoggedIn } = useContext(UserContext);
   const { username } = userInfo;
+  console.log(userInfo)
   //state to hold collapsing navbar
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const handleNavCollapse = () => {
@@ -53,13 +54,34 @@ const Navbar = () => {
             </Link>
           </li>
           {isLoggedIn ? (
+            <>
             <li className="nav-item">
               <Link to="/create" className="nav-link">
                 Submit
               </Link>
             </li>
+               <li className="nav-item">
+               <Link to="/businesses" className="nav-link">
+                 Businesses
+               </Link>
+             </li>
+             </>
           ) : null}
+             {userInfo.businessId && (
+               <>
           <li className="nav-item">
+            <Link to="/pos" className="nav-link">
+              Point of Sale
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/reports">
+              Reports
+            </Link>
+          </li>
+          </>
+          ) }
+          {/* <li className="nav-item">
             <Link to="/businesses" className="nav-link">
               Businesses
             </Link>
@@ -73,7 +95,7 @@ const Navbar = () => {
             <Link className="nav-link" to="/reports">
               Reports
             </Link>
-          </li>
+          </li> */}
         </ul>
         {username ? (
           <li className="nav-item">
