@@ -7,7 +7,7 @@ const ReportsContext = createContext();
 const ReportsContextProvider = ({ children }) => {
   const { userInfo } = useContext(UserContext);
   const [allTransactions, setAllTransactions] = useState([]);
-  const [chartView, setChartView] = useState('week');
+  const [chartView, setChartView] = useState('Month');
   const [drink, setDrink] = useState(null);
 
   // Use effect to set all transactions the states when the user logs in
