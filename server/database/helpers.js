@@ -248,6 +248,47 @@ const removeTransaction = async (transactionId) => {
   return transactionId;
 };
 
+const getAllTransactions = async (businessId) => {
+  const business = await getSingleBusinessInfo(businessId);
+  if (business) {
+    if (business.transactions) {
+      const transactionIdsArr = business.transactions;
+
+      const mappedTransactions = await Promise.all(
+        transactionIdsArr.map(async (transactionId) => {
+          let transaction = await Transaction.findById(transactionId);
+          const drink = await Drink.findById(transaction.drinkId);
+
+          const {
+            transactionId: _id,
+            drinkId,
+            businessId,
+            quantity,
+            date
+          } = transaction
+
+          const formattedTransaction = {
+            transactionId,
+            drinkId,
+            drink,
+            businessId,
+            quantity,
+            date,
+          };
+
+          return formattedTransaction;
+        })
+      );
+      
+      return mappedTransactions;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
 module.exports = {
   getUser,
   createUser,
@@ -262,4 +303,5 @@ module.exports = {
   getSingleBusinessInfo,
   addTransaction,
   removeTransaction,
+  getAllTransactions,
 };

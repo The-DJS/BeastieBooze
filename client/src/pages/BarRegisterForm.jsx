@@ -63,8 +63,13 @@ const BarRegisterForm = () => {
           </div>
         </div>
         <div className='form-group'>
-          <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create your business</h1>
           <form className='input-form ' onSubmit={handleSubmit}>
+          {userInfo.businessId ?
+            (
+              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Edit Your Business</h1>
+            ) : (
+              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create Your Business</h1>
+            )}
             <div>
               <h4 className='create-form-heading'>Name Your Business *</h4>
               <input
@@ -105,7 +110,7 @@ const BarRegisterForm = () => {
                   />
                   <p className='text-muted'>Required Format: 555-555-5555</p>
                 </div>
-                <div class="col-6">
+                <div className="col-6">
                   <h4 className='create-form-heading'>Email</h4>
                   <input
                     type="email"
@@ -148,13 +153,13 @@ const BarRegisterForm = () => {
               (
                 <div>
                   <div className='create-button'>
-                    <button className="btn btn-dark" type="submit" onClick={toggleForm} > Submit Changes </button>
+                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Submit Changes </button>
                   </div>
                 </div>
               ) : (
                 <div>
                   <div className='create-button'>
-                    <button className="btn btn-dark" type="submit" onClick={toggleForm} > Register </button>
+                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Register </button>
                   </div>
                 </div>
               )}
