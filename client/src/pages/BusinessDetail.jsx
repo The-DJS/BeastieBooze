@@ -73,7 +73,7 @@ const BusinessDetail = () => {
             return(
             <div>
                 <ul>
-                    <li><Link to={`/drink/${drinkObj._id}`} >{drinkObj.name}</Link></li>
+                    <li><Link to={`/drink/${drinkObj.apiId}`} >{drinkObj.name}</Link></li>
                 </ul>
             </div>
             )

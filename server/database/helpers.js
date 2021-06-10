@@ -133,7 +133,7 @@ const removeBusiness = async (businessId, googleId, drinkId) => {
 
 const addMenuItem = async (businessId, drinkObj) => {
   try {
-    const { name, alcoholic, directions, ingredients } = drinkObj;
+    const {drinkId, name, alcoholic, directions, ingredients, } = drinkObj;
     const business = await Business.findById(businessId);
     if (!business) {
       return 'didnt find business!';
@@ -142,6 +142,7 @@ const addMenuItem = async (businessId, drinkObj) => {
     console.log(drink)
     if (!drink) {
       await addDrink({
+        apiId: drinkId,
         drinkName: name,
         instructions: directions,
         alcoholic: alcoholic === 'Alcoholic' ? true : false,
@@ -156,7 +157,7 @@ const addMenuItem = async (businessId, drinkObj) => {
     }
     business.menu = business.menu.includes(drink._id.toString())
       ? business.menu
-      : [...business.menu, drink._id];
+      : [...business.menu, drink._id, ];
     await business.save();
     drink.soldAt = drink.soldAt.includes(business._id.toString())
       ? drink.soldAt
@@ -202,7 +203,7 @@ const getSingleBusinessInfo = async (businessId) => {
   const mappedMenu = await Promise.all(
     business.menu.map(async (id) => {
       const foundDrink = await Drink.findById(id);
-      return { name: foundDrink.name, drinkId: foundDrink._id };
+      return { name: foundDrink.name, drinkId: foundDrink._id,  apiId: foundDrink.drinkId};
     })
   );
   return { ...business._doc, menu: mappedMenu };
@@ -279,7 +280,7 @@ const getAllTransactions = async (businessId) => {
           return formattedTransaction;
         })
       );
-      
+
       return mappedTransactions;
     } else {
       return false;

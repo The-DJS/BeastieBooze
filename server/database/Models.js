@@ -33,6 +33,7 @@ const UserSchema = new mongoose.Schema({
   businessId: mongoose.Schema.Types.ObjectId,
 });
 const DrinkSchema = new mongoose.Schema({
+  drinkId: String,
   name: String,
   instructions: String,
   ingredients: {},
@@ -66,8 +67,9 @@ const Drink = mongoose.model('Drink', DrinkSchema);
 const Business = mongoose.model('Business', BusinessSchema);
 const Transaction = mongoose.model('Transaction', TransactionSchema);
 const addDrink = async (drink) => {
-  const { drinkName: name, instructions, ingredients, alcoholic } = drink;
+  const { drinkName: drinkId, name, instructions, ingredients, alcoholic } = drink;
   const newDrink = new Drink({
+    drinkId,
     name,
     instructions,
     alcoholic,
