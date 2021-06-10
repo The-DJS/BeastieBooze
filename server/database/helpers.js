@@ -139,6 +139,7 @@ const addMenuItem = async (businessId, drinkObj) => {
       return 'didnt find business!';
     }
     let drink = await Drink.findOne({ name });
+    console.log(drink)
     if (!drink) {
       await addDrink({
         drinkName: name,

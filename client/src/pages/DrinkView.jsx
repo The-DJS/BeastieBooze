@@ -25,9 +25,9 @@ const DrinkView = () => {
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
 
-      axios
+    axios
       .get('/routes/businesses')
-      .then(({data}) => {
+      .then(({ data }) => {
         console.log(data, drinkId, 'yoyoyoyo')
         setBars(data)
         setMenu(data.menu[0])
@@ -193,13 +193,19 @@ const DrinkView = () => {
           <h5>{bars.map(bar => {
             console.log(aDrink.strDrink)
             console.log(bar.menu[0])
-            if(bar.menu.includes(aDrink.strDrink)){
+            if (bar.menu.includes(aDrink.strDrink)) {
               return <p>{bar.name}</p>
-            }else{
+            } else {
               return (
-                //<li><Link to={`/drink/${drinkObj._id}`} >{drinkObj.name}</Link></li>
-                // <p>{bar.name}</p>
-                <li><Link to={`/businesses/${bar._id}`} >{bar.name}</Link></li>
+                <li>
+                <Link to={{
+                  pathname: `/businesses/${bar._id}`,
+                  state: { barObj: bar },
+                }}
+                >
+                  {bar.name}
+                </Link>
+                </li>
               )
             }
           })}</h5>
