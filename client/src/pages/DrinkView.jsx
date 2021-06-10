@@ -5,6 +5,7 @@ import ModalVideo from 'react-modal-video';
 import { BoozeContext } from '../boozeContext';
 import { UserContext } from '../userContext';
 import { ingredientParser } from '../../utils/parseIng';
+import { Link } from 'react-router-dom';
 const DrinkView = () => {
   // useParams will grab the param passed in url. grabbing drinkId from params.
   const { drinkId } = useParams();
@@ -194,6 +195,12 @@ const DrinkView = () => {
             console.log(bar.menu[0])
             if(bar.menu.includes(aDrink.strDrink)){
               return <p>{bar.name}</p>
+            }else{
+              return (
+                //<li><Link to={`/drink/${drinkObj._id}`} >{drinkObj.name}</Link></li>
+                // <p>{bar.name}</p>
+                <li><Link to={`/businesses/${bar._id}`} >{bar.name}</Link></li>
+              )
             }
           })}</h5>
         </div>

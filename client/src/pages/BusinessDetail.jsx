@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as getKey } from 'uuid';
+import { Link } from 'react-router-dom';
 
 const BusinessDetail = () => {
   const location = useLocation();
@@ -64,11 +65,19 @@ const BusinessDetail = () => {
           <p className="contact-info-paragraph">{email}</p>
           <hr />
           <h5>Menu</h5>
-          {menu.map((drinkObj) => (
-            <p className="menu-item-paragraph" key={getKey()}>
-              {drinkObj.name}
-            </p>
-          ))}
+          {menu.map((drinkObj) => {
+            // <p className="menu-item-paragraph" key={getKey()}>
+            //   {drinkObj.name}
+            // </p>
+            console.log(drinkObj)
+            return(
+            <div>
+                <ul>
+                    <li><Link to={`/drink/${drinkObj._id}`} >{drinkObj.name}</Link></li>
+                </ul>
+            </div>
+            )
+            })}
           <br />
           <br />
           <br />
