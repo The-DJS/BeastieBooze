@@ -6,6 +6,7 @@ import { BoozeContext } from '../boozeContext';
 import { UserContext } from '../userContext';
 import { ingredientParser } from '../../utils/parseIng';
 import { Link } from 'react-router-dom';
+import './modal.css'
 const DrinkView = () => {
   // useParams will grab the param passed in url. grabbing drinkId from params.
   const { drinkId } = useParams();
@@ -105,10 +106,6 @@ const DrinkView = () => {
       );
     }
   };
-  const prepVideo = (title) => {
-    setOpen(true);
-    getVideo(title);
-  };
   const getVideo = (title) => {
     axios
       .get(`/routes/tutorial/${name}`)
@@ -118,6 +115,12 @@ const DrinkView = () => {
       })
       .catch();
   };
+
+  const prepVideo = (title) => {
+    setOpen(true);
+    getVideo(title);
+  };
+
   const youTube = () => {
     if (true) {
       return (
@@ -139,6 +142,7 @@ const DrinkView = () => {
       );
     }
   };
+
   const userButtons = () => {
     if (isLoggedIn) {
       return (
@@ -193,11 +197,11 @@ const DrinkView = () => {
           <h5>{bars.map(bar => {
             console.log(aDrink.strDrink)
             console.log(bar.menu[0])
+            console.log(bar)
             if (bar.menu.includes(aDrink.strDrink)) {
-              return <p>{bar.name}</p>
-            } else {
               return (
                 <li>
+
                 <Link to={{
                   pathname: `/businesses/${bar._id}`,
                   state: { barObj: bar },
@@ -207,7 +211,7 @@ const DrinkView = () => {
                 </Link>
                 </li>
               )
-            }
+              }
           })}</h5>
         </div>
       </div>
