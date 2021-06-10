@@ -228,7 +228,7 @@ const addTransaction = async (drinkId, businessId, quantity) => {
   }
   business.transactions = [...business.transactions, newTransaction._id];
   await business.save();
-  return newTransaction;
+  return { ...newTransaction._doc, drinkName: drink.name };
 };
 
 const removeTransaction = async (transactionId) => {
@@ -245,7 +245,7 @@ const removeTransaction = async (transactionId) => {
     (id) => id.toString() !== transactionId
   );
   await business.save();
-  return true;
+  return transactionId;
 };
 
 module.exports = {

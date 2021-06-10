@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { BarContext } from '../barContext';
 import { v4 as getKey } from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import PointOfSaleTile from '../components/PointOfSaleTile';
+import Transaction from '../components/Transaction';
 
 const PointOfSale = () => {
   const { currentBar } = useContext(BarContext);
@@ -15,28 +15,35 @@ const PointOfSale = () => {
     menu,
     name,
   } = currentBar;
+  const [recentTransactions, setRecentTransactions] = useState([]);
   return (
     <div className="container">
+      <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
+        Point of Sale
+      </h2>
       <div className="row">
-        <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
-          Point of Sale
-        </h2>
-      </div>
-      <div className="row">
-        {menu.map((menuItem) => {
-          const { name } = menuItem;
-          return (
-            <span key={getKey()} className="card col-4">
-              <div className="card-body">
-                <h5 className="card-title">{name}</h5>
-                <p className="card-text">
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </p>
-                <button className="btn btn-dark btn-lg">Add Sale</button>
-              </div>
-            </span>
-          );
-        })}
+        <div className="col-md-8">
+          <div className="row">
+            {menu.map((menuItem) => {
+              return (
+                <PointOfSaleTile
+                  key={getKey()}
+                  {...menuItem}
+                  setRecentTransactions={setRecentTransactions}
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div className="col-md-4">
+          {recentTransactions.slice(0, 5).map((transaction) => (
+            <Transaction
+              key={getKey()}
+              {...transaction}
+              setRecentTransactions={setRecentTransactions}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
