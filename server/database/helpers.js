@@ -74,6 +74,20 @@ const getAllBusinesses = async () => {
   }
 };
 
+const getPhoto = async () => {
+  const key = '6LiUm7mRi-WfSKgN7w7fBXuty5sJop57T254IIcieao';
+  const { data } = await axios.get(
+    `https://api.unsplash.com/photos/random?client_id=${key}&topics=bar&count=1`
+  );
+  // const url = data[0].urls.regular;
+  const [
+    {
+      urls: { regular: url },
+    },
+  ] = data;
+  return url;
+};
+
 const registerBusiness = async (
   googleId,
   name,
@@ -85,10 +99,12 @@ const registerBusiness = async (
     if (business) {
       return false;
     }
+    const photo = await getPhoto();
     const newBusiness = await new Business({
       name,
       contactInformation: contactInformationObj,
       details: detailsObj,
+      imageUrl: photo,
     }).save();
     const user = await User.findOne({ googleId });
     user.businessId = newBusiness._id;
@@ -203,7 +219,11 @@ const getSingleBusinessInfo = async (businessId) => {
   const mappedMenu = await Promise.all(
     business.menu.map(async (id) => {
       const foundDrink = await Drink.findById(id);
-      return { name: foundDrink.name, drinkId: foundDrink._id,  apiId: foundDrink.drinkId};
+      return {
+        name: foundDrink.name,
+        drinkId: foundDrink._id,
+        apiId: foundDrink.drinkId,
+      };
     })
   );
   return { ...business._doc, menu: mappedMenu };
@@ -265,8 +285,8 @@ const getAllTransactions = async (businessId) => {
             drinkId,
             businessId,
             quantity,
-            date
-          } = transaction
+            date,
+          } = transaction;
 
           const formattedTransaction = {
             transactionId,

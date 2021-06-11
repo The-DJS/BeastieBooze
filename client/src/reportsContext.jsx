@@ -19,7 +19,7 @@ const ReportsContextProvider = ({ children }) => {
         .then(({ data: transactions }) => {
           setAllTransactions(transactions);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.log(err));
     }
   }, [userInfo]);
 

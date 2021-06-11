@@ -39,9 +39,7 @@ const App = () => {
         <Route exact path="/businesses" component={BusinessSummary} />
         <Route path="/businesses/:businessId" component={BusinessDetail} />
         <Route path="/pos">
-          <POSContextProvider>
-            <PointOfSale />
-          </POSContextProvider>
+          <PointOfSale />
         </Route>
         <Route path="/reports" component={Reports} />
         <Route path="/pos" component={PointOfSale} />
