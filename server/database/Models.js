@@ -56,6 +56,7 @@ const BusinessSchema = new mongoose.Schema({
   },
   menu: [{ type: mongoose.Schema.Types.ObjectId, default: [] }], // drink docs
   transactions: [{ type: mongoose.Schema.Types.ObjectId, default: [] }], // transaction docs
+  imageUrl: String,
 });
 const TransactionSchema = new mongoose.Schema({
   drinkId: mongoose.Schema.Types.ObjectId,

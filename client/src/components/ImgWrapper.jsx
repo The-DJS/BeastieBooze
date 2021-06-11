@@ -11,28 +11,28 @@ const ImgWrapper = ({ drink = {}, barObj }) => {
     strIngredient1: ingredient,
   } = drink;
 
-  const getPhoto = async () => {
-    const key = '6LiUm7mRi-WfSKgN7w7fBXuty5sJop57T254IIcieao';
-    const { data } = await axios.get(
-      `https://api.unsplash.com/photos/random?client_id=${key}&topics=bar&count=1`
-    );
-    const [
-      {
-        urls: { regular: url },
-      },
-    ] = data;
-    return url;
-  };
+  // const getPhoto = async () => {
+  //   const key = '6LiUm7mRi-WfSKgN7w7fBXuty5sJop57T254IIcieao';
+  //   const { data } = await axios.get(
+  //     `https://api.unsplash.com/photos/random?client_id=${key}&topics=bar&count=1`
+  //   );
+  //   const [
+  //     {
+  //       urls: { regular: url },
+  //     },
+  //   ] = data;
+  //   return url;
+  // };
 
   //is thumbnail loaded? Use a placehholder until image fetches from API
-  const [source, setSource] = useState('/images/martini.gif');
+  const [source, setSource] = useState(
+    !barObj ? '/images/martini.gif' : '/images/bar.jpeg'
+  );
   useEffect(() => {
     if (Object.keys(drink).length) {
       setSource(thumbnail);
     } else {
-      getPhoto()
-        .then((url) => setSource(url))
-        .catch((err) => console.log(err));
+      setSource(barObj.imageUrl);
     }
   }, []);
 
