@@ -1,5 +1,8 @@
 # BeastieBooze
 
+# DESCRIPTION
+Welcome! BeastieBooze is here to serve you. BeastieBooze is where you can look for drinks that you love or drinks you never heard of and get information on how to make the drink. Each drink view comes with a tutorial video on how to make the drink. If you are a bar owner you can subit a form that provides information about your bar. Which will give you the ablity to create a menu from scratch and add it to your bussiness profile for users can see. You will also have the abilty to add point of sale of each drink in your menu and see see your daily, weekly, and monthly report. 
+
 # Initialization
 
 Webpack:

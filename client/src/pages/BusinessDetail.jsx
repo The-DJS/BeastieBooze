@@ -16,29 +16,30 @@ const BusinessDetail = () => {
     details: { description, hoursOfOperation },
     menu,
     name,
+    imageUrl,
   } = barObj;
 
-  const getPhoto = async () => {
-    const key = '6LiUm7mRi-WfSKgN7w7fBXuty5sJop57T254IIcieao';
-    const { data } = await axios.get(
-      `https://api.unsplash.com/photos/random?client_id=${key}&topics=bar&count=1`
-    );
-    // const url = data[0].urls.regular;
-    const [
-      {
-        urls: { regular: url },
-      },
-    ] = data;
-    return url;
-  };
+  // const getPhoto = async () => {
+  //   const key = '6LiUm7mRi-WfSKgN7w7fBXuty5sJop57T254IIcieao';
+  //   const { data } = await axios.get(
+  //     `https://api.unsplash.com/photos/random?client_id=${key}&topics=bar&count=1`
+  //   );
+  //   // const url = data[0].urls.regular;
+  //   const [
+  //     {
+  //       urls: { regular: url },
+  //     },
+  //   ] = data;
+  //   return url;
+  // };
 
-  useEffect(() => {
-    getPhoto()
-      .then((url) => {
-        setUrl(url);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   getPhoto()
+  //     .then((url) => {
+  //       setUrl(url);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <div className="container">
@@ -48,7 +49,7 @@ const BusinessDetail = () => {
       <div className="row">
         <div className="col-md-6">
           <img
-            src={url.length ? url : <h1>loading photo...</h1>}
+            src={imageUrl ? imageUrl : <h1>loading photo...</h1>}
             className="img-fluid custom-drink-display"
             alt="bar image"
           />
@@ -69,15 +70,17 @@ const BusinessDetail = () => {
             // <p className="menu-item-paragraph" key={getKey()}>
             //   {drinkObj.name}
             // </p>
-            console.log(drinkObj)
-            return(
-            <div>
+            console.log(drinkObj);
+            return (
+              <div>
                 <ul>
-                    <li><Link to={`/drink/${drinkObj._id}`} >{drinkObj.name}</Link></li>
+                  <li>
+                    <Link to={`/drink/${drinkObj._id}`}>{drinkObj.name}</Link>
+                  </li>
                 </ul>
-            </div>
-            )
-            })}
+              </div>
+            );
+          })}
           <br />
           <br />
           <br />

@@ -3,11 +3,13 @@ import React, { useState, useContext } from 'react';
 import { POSContext } from '../posContext';
 import { UserContext } from '../userContext';
 import { BoozeContext } from '../boozeContext';
+import { BarContext } from '../barContext';
 
 const PointOfSaleTile = ({ name, drinkId, removeMenuItem, menuLength }) => {
   const { userInfo } = useContext(UserContext);
   const { transactions, addTransaction } = useContext(POSContext);
   const { aDrink } = useContext(BoozeContext);
+  const { fetchCurrentBar } = useContext(BarContext);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -35,6 +37,7 @@ const PointOfSaleTile = ({ name, drinkId, removeMenuItem, menuLength }) => {
       })
       .then(({ data: newMenu }) => {
         removeMenuItem(name);
+        fetchCurrentBar();
       })
       .catch((err) => console.log(err));
   };

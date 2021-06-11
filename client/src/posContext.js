@@ -6,7 +6,7 @@ function POSContextProvider({ children }) {
   const [transactions, setTransactions] = useState([]);
 
   const addTransaction = (transaction) => {
-    setTransactions([...transactions, transaction]);
+    setTransactions([transaction, ...transactions]);
   };
 
   const removeTransaction = (transactionId) => {

@@ -59,7 +59,8 @@ const BarContextProvider = ({ children }) => {
 
   // Set current bar when the userInfo state changes.
   const [currentBar, setCurrentBar] = useState(null);
-  useEffect(() => {
+
+  const fetchCurrentBar = () => {
     if (userInfo.businessId) {
       axios
         .get(`/routes/businesses/${userInfo.businessId}`)
@@ -71,7 +72,9 @@ const BarContextProvider = ({ children }) => {
         })
         .catch((err) => console.log(err));
     }
-  }, [userInfo]);
+  };
+
+  useEffect(fetchCurrentBar, [userInfo]);
 
   return (
     <BarContext.Provider
@@ -97,6 +100,7 @@ const BarContextProvider = ({ children }) => {
         fetchBars,
         setBars,
         setCurrentBar,
+        fetchCurrentBar,
       }}
     >
       {children}

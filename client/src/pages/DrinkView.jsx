@@ -6,22 +6,25 @@ import { BoozeContext } from '../boozeContext';
 import { UserContext } from '../userContext';
 import { ingredientParser } from '../../utils/parseIng';
 import { Link } from 'react-router-dom';
-import './modal.css'
+import './modal.css';
+import { BarContext } from '../barContext';
 const DrinkView = () => {
+  const { fetchCurrentBar } = useContext(BarContext);
+
   // useParams will grab the param passed in url. grabbing drinkId from params.
   const { drinkId } = useParams();
   const [aDrink, setADrink] = useState({});
   const [isOpen, setOpen] = useState(false);
   const [tutorial, setTutorial] = useState();
-  const [bars, setBars] = useState([])
-  const [menu, setMenu] = useState({})
+  const [bars, setBars] = useState([]);
+  const [menu, setMenu] = useState({});
 
-  console.log(aDrink)
+  console.log(aDrink);
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
       .then(({ data }) => {
-        console.log(data, 'DATA!!!')
+        console.log(data, 'DATA!!!');
         setADrink(data.drinks[0]);
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
@@ -29,9 +32,9 @@ const DrinkView = () => {
     axios
       .get('/routes/businesses')
       .then(({ data }) => {
-        console.log(data, drinkId, 'yoyoyoyo')
-        setBars(data)
-        setMenu(data.menu[0])
+        console.log(data, drinkId, 'yoyoyoyo');
+        setBars(data);
+        setMenu(data.menu[0]);
       })
       .catch((err) => console.error('ERROR!', err, drinkId));
   }, []);
@@ -84,7 +87,10 @@ const DrinkView = () => {
         businessId: userInfo.businessId,
         drinkObj: { name, directions, ingredients, alcoholic },
       })
-      .then(({ data: newMenu }) => console.log(newMenu))
+      .then(({ data: newMenu }) => {
+        console.log(newMenu);
+        fetchCurrentBar();
+      })
       .catch((err) => console.log(err));
   };
   const addToMenuButton = () => {
@@ -205,25 +211,26 @@ const DrinkView = () => {
           <br></br>
           <br></br>
           <h5>Bars</h5>
-          <h5>{bars.map(bar => {
-            console.log(aDrink.strDrink)
-            console.log(bar.menu[0])
-            console.log(bar)
-            // if (bar.menu.includes(aDrink.strDrink)) {
+          <h5>
+            {bars.map((bar) => {
+              console.log(aDrink.strDrink);
+              console.log(bar.menu[0]);
+              console.log(bar);
+              // if (bar.menu.includes(aDrink.strDrink)) {
               return (
                 <li>
-
-                <Link to={{
-                  pathname: `/businesses/${bar._id}`,
-                  state: { barObj: bar },
-                }}
-                >
-                  {bar.name}
-                </Link>
+                  <Link
+                    to={{
+                      pathname: `/businesses/${bar._id}`,
+                      state: { barObj: bar },
+                    }}
+                  >
+                    {bar.name}
+                  </Link>
                 </li>
-              )
-              }
-          )}</h5>
+              );
+            })}
+          </h5>
         </div>
       </div>
     </div>
