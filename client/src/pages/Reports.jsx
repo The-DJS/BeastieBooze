@@ -22,6 +22,8 @@ const Reports = () => {
   const handleViewChange = (e) => {
     const clickedView = e.split(' ')[0];
     if (clickedView !== chartView) {
+
+      
       setChartView(clickedView);
     }
   }
