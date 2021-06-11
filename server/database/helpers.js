@@ -133,7 +133,7 @@ const removeBusiness = async (businessId, googleId, drinkId) => {
 
 const addMenuItem = async (businessId, drinkObj) => {
   try {
-    const { idDrink, name, alcoholic, directions, ingredients } = drinkObj;
+    const { name, alcoholic, directions, ingredients } = drinkObj;
     const business = await Business.findById(businessId);
     if (!business) {
       return false;
@@ -141,7 +141,6 @@ const addMenuItem = async (businessId, drinkObj) => {
     let drink = await Drink.findOne({ name });
     if (!drink) {
       await addDrink({
-        idDrink,
         drinkName: name,
         instructions: directions,
         alcoholic: alcoholic === 'Alcoholic' ? true : false,

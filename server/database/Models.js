@@ -33,13 +33,13 @@ const UserSchema = new mongoose.Schema({
   businessId: mongoose.Schema.Types.ObjectId,
 });
 const DrinkSchema = new mongoose.Schema({
-  idDrink: String,
   name: String,
   instructions: String,
   ingredients: {},
   alcoholic: Boolean,
   createdBy: String,
   soldAt: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
+  isCustom: Boolean,
   //add a createdBy to the drinkSchema to link to Users once created
 });
 const BusinessSchema = new mongoose.Schema({
