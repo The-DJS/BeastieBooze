@@ -14,18 +14,15 @@ import { UserContextProvider } from './userContext';
 import { BoozeContextProvider } from './boozeContext';
 import { BarContextProvider } from './barContext';
 import { POSContextProvider } from './posContext';
-import { ReportsContextProvider } from './reportsContext';
 
 ReactDOM.render(
   <UserContextProvider>
     <BarContextProvider>
       <BoozeContextProvider>
         <POSContextProvider>
-          <ReportsContextProvider>
-            <Router>
-              <App />
-            </Router>
-          </ReportsContextProvider>
+          <Router>
+            <App />
+          </Router>
         </POSContextProvider>
       </BoozeContextProvider>
     </BarContextProvider>

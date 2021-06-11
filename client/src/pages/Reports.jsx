@@ -3,8 +3,8 @@ import { ReportsContext } from '../reportsContext';
 import { UserContext } from '../userContext';
 import ThisWeek from '../components/charts/week/ThisWeek';
 import LastSevenDays from '../components/charts/week/LastSevenDays';
-import ThisMonth from '../components/charts/month/ThisMonth'
-import Last30Days from '../components/charts/month/Last30Days'
+import ThisMonth from '../components/charts/month/ThisMonth';
+import Last30Days from '../components/charts/month/Last30Days';
 import ThisYear from '../components/charts/year/ThisYear';
 import LastYear from '../components/charts/year/LastYear';
 
@@ -22,8 +22,6 @@ const Reports = () => {
   const handleViewChange = (e) => {
     const clickedView = e.split(' ')[0];
     if (clickedView !== chartView) {
-
-      
       setChartView(clickedView);
     }
   }
