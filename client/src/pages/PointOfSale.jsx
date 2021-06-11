@@ -54,12 +54,9 @@ const PointOfSale = () => {
           </div>
         </div>
         <div className={transactions.length ? 'col-4' : 'col-0'}>
-          {transactions
-            .reverse()
-            .slice(0, 5)
-            .map((transaction) => (
-              <Transaction key={getKey()} {...transaction} />
-            ))}
+          {transactions.slice(0, 5).map((transaction) => (
+            <Transaction key={getKey()} {...transaction} />
+          ))}
         </div>
       </div>
     </div>

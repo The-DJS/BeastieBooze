@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        use: ["html-loader"]
+        use: ['html-loader'],
       },
       {
         test: /\.css$/,
@@ -23,14 +23,13 @@ module.exports = {
     ],
   },
 
-    resolve: {
-      extensions: ['', '.js', '.jsx']
-    },
-    output: {
-      filename: 'bundle.js',
-      publicPath: '/',
-      path: `${DIST_DIR}`,
-    },
-    devtool: "source-map"
-  };
-
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
+  output: {
+    filename: 'bundle.js',
+    publicPath: '/',
+    path: `${DIST_DIR}`,
+  },
+  devtool: 'source-map',
+};
