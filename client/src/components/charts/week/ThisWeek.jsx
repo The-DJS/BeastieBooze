@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2';
 const ThisWeek = () => {
   // Expected data format either created in axios call or formatted from the backend.
   const data = [
+    ['2nd Week of June', null],
     ['Monday', '50'],
     ['Tuesday', '70'],
     ['Wednesday', '25'],
@@ -15,17 +16,26 @@ const ThisWeek = () => {
   ];
 
   // Get the labels from the data.
-  const getLabels = () => {
-    const labels = [];
-    data.map(tuple => {
-      const label = tuple[0];
+  const getLabels = (filter) => {
+    if (filter.toLowerCase() === 'page header') {
+      return data.find(tuple => {
+        if (tuple[1] === null) {
+          return true
+        }
+      })[0];
+    } else if (filter.toLowerCase() === 'chart') {
+      const labels = [];
+      data.map(tuple => {
+        const label = tuple[0];
+        const val = tuple[1];
 
-      if (label.toLowerCase() !== 'total') {
-        labels.push(label);
-      }
-    });
+        if (label.toLowerCase() !== 'total' && val !== null) {
+          labels.push(label);
+        }
+      });
 
-    return labels;
+      return labels;
+    }
   }
 
   // Get the totals from the data
@@ -53,7 +63,7 @@ const ThisWeek = () => {
   }
 
   const chartData = {
-    labels: getLabels(),
+    labels: getLabels('chart'),
     datasets: [
       {
         label: '# of Sales',
@@ -98,11 +108,11 @@ const ThisWeek = () => {
   return (
     <div className='col'>
       <h1 className='mb-3 text-center'>
-        This Week's Sales
+        {getLabels('page header')}'s Sales
       </h1>
       <Bar data={chartData} options={options} />
       <h3 className='mb-3 text-center'>
-        Total sales this week: {getTotals('total')}
+        Total Sales on the {getLabels('page header')}: {getTotals('total')}
       </h3>
     </div>
   )
