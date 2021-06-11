@@ -114,7 +114,7 @@ const registerBusiness = async (
     throw error;
   }
 };
-
+//
 const removeBusiness = async (businessId, googleId, drinkId) => {
   try {
     const user = await User.findOne({ googleId });

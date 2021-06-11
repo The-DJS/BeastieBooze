@@ -105,14 +105,15 @@ const CustomDrinkView = () => {
           <hr></hr>
           <h5 style={{ paddingBottom: '10px' }}>Ingredients</h5>
           <ul>
-            {ingredients.map((i, index) => {
+            {ingredients}
+            {/* {ingredients.map((i, index) => {
               return (
                 <li key={index}>
                   {' '}
-                  {i[1]} {i[0]}
+                  {i}
                 </li>
               ); //* each element is an array containing an ingredient followed by it's measurement
-            })}
+            })} */}
           </ul>
           <br />
           <h5>Directions</h5>
