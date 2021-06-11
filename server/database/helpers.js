@@ -203,7 +203,7 @@ const getSingleBusinessInfo = async (businessId) => {
   const mappedMenu = await Promise.all(
     business.menu.map(async (id) => {
       const foundDrink = await Drink.findById(id);
-      return { name: foundDrink.name, drinkId: foundDrink._id };
+      return { name: foundDrink.name, drinkId: foundDrink._id,  apiId: foundDrink.drinkId};
     })
   );
   return { ...business._doc, menu: mappedMenu };
@@ -280,7 +280,7 @@ const getAllTransactions = async (businessId) => {
           return formattedTransaction;
         })
       );
-      
+
       return mappedTransactions;
     } else {
       return false;

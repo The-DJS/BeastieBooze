@@ -2,30 +2,41 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ModalVideo from 'react-modal-video';
-
 import { BoozeContext } from '../boozeContext';
 import { UserContext } from '../userContext';
-
 import { ingredientParser } from '../../utils/parseIng';
-
+import { Link } from 'react-router-dom';
+import './modal.css'
 const DrinkView = () => {
   // useParams will grab the param passed in url. grabbing drinkId from params.
   const { drinkId } = useParams();
   const [aDrink, setADrink] = useState({});
   const [isOpen, setOpen] = useState(false);
   const [tutorial, setTutorial] = useState();
+  const [bars, setBars] = useState([])
+  const [menu, setMenu] = useState({})
 
+  console.log(aDrink)
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
       .then(({ data }) => {
+        console.log(data, 'DATA!!!')
         setADrink(data.drinks[0]);
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
+
+    axios
+      .get('/routes/businesses')
+      .then(({ data }) => {
+        console.log(data, drinkId, 'yoyoyoyo')
+        setBars(data)
+        setMenu(data.menu[0])
+      })
+      .catch((err) => console.error('ERROR!', err, drinkId));
   }, []);
 
   const ingredients = ingredientParser(aDrink);
-
   const {
     isLoggedIn,
     favoriteDrinks,
@@ -33,7 +44,6 @@ const DrinkView = () => {
     removeFavorite,
     userInfo,
   } = useContext(UserContext);
-
   // grab what we need from drink object, reassign names
   const {
     idDrink: id,
@@ -77,7 +87,6 @@ const DrinkView = () => {
       .then(({ data: newMenu }) => console.log(newMenu))
       .catch((err) => console.log(err));
   };
-
   const addToMenuButton = () => {
     if (true) {
       return (
@@ -96,7 +105,6 @@ const DrinkView = () => {
       );
     }
   };
-
   const removeButton = () => {
     if (favoriteDrinks.includes(name)) {
       return (
@@ -108,11 +116,6 @@ const DrinkView = () => {
       );
     }
   };
-
-  const prepVideo = (title) => {
-    setOpen(true);
-    getVideo(title);
-  };
   const getVideo = (title) => {
     axios
       .get(`/routes/tutorial/${name}`)
@@ -121,6 +124,11 @@ const DrinkView = () => {
         console.log('DATA FROM Youtube request', data);
       })
       .catch();
+  };
+
+  const prepVideo = (title) => {
+    setOpen(true);
+    getVideo(title);
   };
 
   const youTube = () => {
@@ -170,7 +178,6 @@ const DrinkView = () => {
       );
     }
   };
-
   return (
     <div className="container">
       <h2 className="page-heading">{name}</h2>
@@ -197,10 +204,29 @@ const DrinkView = () => {
           {userButtons()}
           <br></br>
           <br></br>
+          <h5>Bars</h5>
+          <h5>{bars.map(bar => {
+            console.log(aDrink.strDrink)
+            console.log(bar.menu[0])
+            console.log(bar)
+            // if (bar.menu.includes(aDrink.strDrink)) {
+              return (
+                <li>
+
+                <Link to={{
+                  pathname: `/businesses/${bar._id}`,
+                  state: { barObj: bar },
+                }}
+                >
+                  {bar.name}
+                </Link>
+                </li>
+              )
+              }
+          )}</h5>
         </div>
       </div>
     </div>
   );
 };
-
 export default DrinkView;
