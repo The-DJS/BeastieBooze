@@ -53,28 +53,31 @@ const DrinkView = () => {
     strGlass: glass,
     strInstructions: directions,
   } = aDrink;
-  const removeFromMenu = () => {
-    axios
-      .delete('/routes/businesses/drink', {
-        data: {
-          businessId: userInfo.businessId,
-          drinkObj: { name, directions, ingredients, alcoholic },
-        },
-      })
-      .then(({ data: newMenu }) => console.log(newMenu))
-      .catch((err) => console.log(err));
-  };
-  const removeFromMenuButton = () => {
-    if (true) {
-      return (
-        <span className="remove-from-menu-button" onClick={removeFromMenu}>
-          <button type="button" className="btn btn-dark drink-view-btn">
-            Remove from Menu
-          </button>
-        </span>
-      );
-    }
-  };
+
+  // const removeFromMenu = () => {
+  //   axios
+  //     .delete('/routes/businesses/drink', {
+  //       data: {
+  //         businessId: userInfo.businessId,
+  //         drinkObj: { name, directions, ingredients, alcoholic },
+  //       },
+  //     })
+  //     .then(({ data: newMenu }) => console.log(newMenu))
+  //     .catch((err) => console.log(err));
+  // };
+
+  // const removeFromMenuButton = () => {
+  //   if (true) {
+  //     return (
+  //       <span className="remove-from-menu-button" onClick={removeFromMenu}>
+  //         <button type="button" className="btn btn-dark">
+  //           Remove from Menu
+  //         </button>
+  //       </span>
+  //     );
+  //   }
+  // };
+
   const addToMenu = () => {
     axios
       .post('/routes/businesses/drink', {
@@ -87,8 +90,15 @@ const DrinkView = () => {
   const addToMenuButton = () => {
     if (true) {
       return (
-        <span className="add-to-menu-button" onClick={addToMenu}>
-          <button type="button" className="btn btn-dark drink-view-btn">
+        <span className="add-to-menu-button">
+          <button
+            type="button"
+            className="btn btn-dark drink-view-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToMenu();
+            }}
+          >
             Add to Menu
           </button>
         </span>
@@ -153,6 +163,7 @@ const DrinkView = () => {
               type="button"
               className="btn btn-dark drink-view-btn"
               onClick={() => {
+                console.log('toggling favorite');
                 toggleFavorite(aDrink);
               }}
             >
@@ -162,7 +173,7 @@ const DrinkView = () => {
           {youTube()}
           {removeButton()}
           {addToMenuButton()}
-          {removeFromMenuButton()}
+          {/* {removeFromMenuButton()} */}
         </>
       );
     }

@@ -18,11 +18,7 @@ const BarContextProvider = ({ children }) => {
 
   // Update the independent phone, address, and email states when contactInfo state changes.
   useEffect(() => {
-    const {
-      address,
-      phone,
-      email,
-    } = contactInformation;
+    const { address, phone, email } = contactInformation;
 
     setAddress(address);
     setPhone(phone);
@@ -34,16 +30,13 @@ const BarContextProvider = ({ children }) => {
   const [hoursOfOperation, setHoursOfOperation] = useState('');
   const [description, setDescription] = useState('');
 
-    // Update the independent phone, address, and email states when contactInfo state changes.
-    useEffect(() => {
-      const {
-        hoursOfOperation,
-        description
-      } = details;
+  // Update the independent phone, address, and email states when contactInfo state changes.
+  useEffect(() => {
+    const { hoursOfOperation, description } = details;
 
-      setHoursOfOperation(hoursOfOperation);
-      setDescription(description);
-    }, [details]);
+    setHoursOfOperation(hoursOfOperation);
+    setDescription(description);
+  }, [details]);
 
   const [bars, setBars] = useState([]);
 
@@ -76,7 +69,7 @@ const BarContextProvider = ({ children }) => {
           setContactInformation(barInfo.contactInformation);
           setDetails(barInfo.details);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => console.log(err));
     }
   }, [userInfo]);
 
@@ -101,6 +94,8 @@ const BarContextProvider = ({ children }) => {
         toggleForm,
         bars,
         currentBar,
+        fetchBars,
+        setBars,
         setCurrentBar,
       }}
     >

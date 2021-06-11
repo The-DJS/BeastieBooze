@@ -67,18 +67,25 @@ const Drink = mongoose.model('Drink', DrinkSchema);
 const Business = mongoose.model('Business', BusinessSchema);
 const Transaction = mongoose.model('Transaction', TransactionSchema);
 const addDrink = async (drink) => {
-  const { drinkName: idDrink, name, instructions, ingredients, alcoholic } = drink;
+  const {
+    drinkName: name,
+    instructions,
+    ingredients,
+    alcoholic,
+    isCustom,
+  } = drink;
   const newDrink = new Drink({
-    idDrink,
     name,
     instructions,
     alcoholic,
     ingredients,
+    isCustom,
   });
   await newDrink.save();
 };
 const getDrinks = async () => {
-  return await Drink.find({}).exec();
+  const drinks = await Drink.find({}).exec();
+  return drinks.filter((drink) => drink.isCustom);
 };
 module.exports = {
   User,
