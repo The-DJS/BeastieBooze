@@ -7,13 +7,20 @@ import { v4 as getKey } from 'uuid';
 
 const BusinessSummary = () => {
   const { verifyAge, isLegal } = useContext(UserContext);
+  const { bars, fetchBars, setBars } = useContext(BarContext);
 
   useEffect(() => {
     if (isLegal === null) {
       verifyAge();
     }
   }, []);
-  const { bars } = useContext(BarContext);
+
+  useEffect(() => {
+    fetchBars()
+      .then((bars) => setBars(bars))
+      .catch((err) => console.log(err));
+  }, []);
+
   return isLegal ? (
     <div className="container">
       <h1 className="page-heading">Businesses</h1>

@@ -16,6 +16,7 @@ function UserContextProvider({ children }) {
 
     axios.get('/routes/users', { params: userData })
       .then(({ data }) => {
+        console.log(data);
         // console.log('===> userContext user response:', data)
         const { googleId, username, favorites, creations, businessId } = data;
         setUserInfo({ googleId, username, favorites, creations, businessId })

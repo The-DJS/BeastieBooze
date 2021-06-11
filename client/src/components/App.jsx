@@ -17,6 +17,7 @@ import BusinessSummary from '../pages/BusinessSummary.jsx';
 import BusinessDetail from '../pages/BusinessDetail.jsx';
 import PointOfSale from '../pages/PointOfSale.jsx';
 import Reports from '../pages/Reports.jsx';
+import { POSContextProvider } from '../posContext';
 import { ReportsContextProvider } from '../reportsContext';
 
 const App = () => {
@@ -37,12 +38,18 @@ const App = () => {
         <Route path="/custom/:drinkId" component={CustomDrinkView} />
         <Route exact path="/businesses" component={BusinessSummary} />
         <Route path="/businesses/:businessId" component={BusinessDetail} />
+        <Route path="/pos">
+          <POSContextProvider>
+            <PointOfSale />
+          </POSContextProvider>
+        </Route>
+        <Route path="/reports" component={Reports} />
         <Route path="/pos" component={PointOfSale} />
         {/* <Route path="/reports" component={Reports} /> */}
         <Route path="/reports">
           <ReportsContextProvider>
-              <Reports />
-            </ReportsContextProvider>
+            <Reports />
+          </ReportsContextProvider>
         </Route>
       </Switch>
     </div>

@@ -12,6 +12,8 @@ const {drinksFeed, random10, mocktail10} = useContext(BoozeContext);
   useEffect(() => {
     if (isLegal === null) {
       verifyAge();
+    // }else if (isLegal === true){
+    //   return true
     }
   }, [])
 

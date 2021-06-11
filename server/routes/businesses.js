@@ -11,18 +11,21 @@ const {
 const businessesRouter = Router();
 
 businessesRouter.get('/:businessId', (req, res) => {
+  console.log('in get');
   const { businessId } = req.params;
   getSingleBusinessInfo(businessId)
     .then((business) => {
       if (!business) {
         return res.send(false);
       }
+      console.log(business);
       res.send(business);
     })
     .catch((err) => console.log(err));
 });
 
 businessesRouter.get('/', (req, res) => {
+  console.log(req.body, 'hey im here');
   getAllBusinesses()
     .then((businesses) => {
       res.send(businesses);
@@ -80,5 +83,10 @@ businessesRouter.delete('/', (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+businessesRouter.get('/', (req, res) => {
+//get the drink id for the api
+//then add it to the menu
+})
 
 module.exports = { businessesRouter };
