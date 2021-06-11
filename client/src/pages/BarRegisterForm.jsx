@@ -1,19 +1,20 @@
-import React, { useContext } from 'react'
-import { BarContext } from '../barContext'
-import { UserContext } from '../userContext'
-import axios from 'axios'
-import { log } from 'async'
+import React, { useContext } from 'react';
+import { BarContext } from '../barContext';
+import { UserContext } from '../userContext';
+import axios from 'axios';
 
 const BarRegisterForm = () => {
   const {
     barName,
     setBarName,
+    contactInformation,
     address,
     setAddress,
     phone,
     setPhone,
     email,
     setEmail,
+    details,
     hoursOfOperation,
     setHoursOfOperation,
     description,
@@ -62,8 +63,13 @@ const BarRegisterForm = () => {
           </div>
         </div>
         <div className='form-group'>
-          <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create your business</h1>
           <form className='input-form ' onSubmit={handleSubmit}>
+          {userInfo.businessId ?
+            (
+              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Edit Your Business</h1>
+            ) : (
+              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create Your Business</h1>
+            )}
             <div>
               <h4 className='create-form-heading'>Name Your Business *</h4>
               <input
@@ -89,29 +95,35 @@ const BarRegisterForm = () => {
                 onChange={(e) => setAddress(e.target.value)}
                 required
               />
-              <h4 className='create-form-heading'>Phone *</h4>
-              <input
-                className="form-control"
-                type='tel'
-                placeholder="504-524-5185"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-              <p className='text-muted'>Required Format: 555-555-5555</p>
-              <h4 className='create-form-heading'>Email</h4>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="help@fattuesday.com"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
+              <div class="form-row">
+                <div class="col-6">
+                  <h4 className='create-form-heading'>Phone *</h4>
+                  <input
+                    className="form-control"
+                    type='tel'
+                    placeholder="504-524-5185"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    name="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                  <p className='text-muted'>Required Format: 555-555-5555</p>
+                </div>
+                <div className="col-6">
+                  <h4 className='create-form-heading'>Email</h4>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="help@fattuesday.com"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+              </div>
               <h3 className="page-heading" style={{ paddingBottom: '0px' }}>Other Details</h3>
               <h4 className='create-form-heading'>Hours of Operation *</h4>
               <textarea
@@ -137,9 +149,20 @@ const BarRegisterForm = () => {
               />
               <h5 className='create-form-heading'>Required *</h5>
             </div>
-            <div className='create-button'>
-              <button className="btn btn-dark" type="submit"> Submit </button>
-            </div>
+            {userInfo.businessId ?
+              (
+                <div>
+                  <div className='create-button'>
+                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Submit Changes </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className='create-button'>
+                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Register </button>
+                  </div>
+                </div>
+              )}
           </form>
         </div>
       </div>
@@ -148,13 +171,34 @@ const BarRegisterForm = () => {
         (
           <div>
             <div className='create-button'>
-              <button className="btn btn-dark" type="button" onClick={toggleForm} > Edit your bar </button>
+              <button className="btn btn-dark" type="button" onClick={toggleForm} > Edit Your Bar </button>
+            </div>
+            <div className="container">
+              <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
+                {barName}
+              </h2>
+              <div className=" align-self-center custom-info">
+                <h4 style={{ paddingBottom: '10px', textTransform: 'capitalize' }}>
+                  {description}
+                </h4>
+                <hr />
+                <h5 style={{ paddingBottom: '10px' }}>Location and Hours</h5>
+                <p>{hoursOfOperation}</p>
+                <p className="contact-info-paragraph">{address}</p>
+                <p className="contact-info-paragraph">{phone}</p>
+                <p className="contact-info-paragraph">{email}</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+              </div>
             </div>
           </div>
         ) : (
           <div>
             <div className='create-button'>
-              <button className="btn btn-dark" type="button" onClick={toggleForm} > Register your bar </button>
+              <button className="btn btn-dark" type="button" onClick={toggleForm} > Register Your Bar </button>
             </div>
           </div>
         )

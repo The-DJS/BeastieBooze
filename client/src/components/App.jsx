@@ -18,6 +18,7 @@ import BusinessDetail from '../pages/BusinessDetail.jsx';
 import PointOfSale from '../pages/PointOfSale.jsx';
 import Reports from '../pages/Reports.jsx';
 import { POSContextProvider } from '../posContext';
+import { ReportsContextProvider } from '../reportsContext';
 
 const App = () => {
   // using react router to conditionally render views
@@ -43,6 +44,13 @@ const App = () => {
           </POSContextProvider>
         </Route>
         <Route path="/reports" component={Reports} />
+        <Route path="/pos" component={PointOfSale} />
+        {/* <Route path="/reports" component={Reports} /> */}
+        <Route path="/reports">
+          <ReportsContextProvider>
+            <Reports />
+          </ReportsContextProvider>
+        </Route>
       </Switch>
     </div>
   );
