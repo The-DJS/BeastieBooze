@@ -11,12 +11,14 @@ const {
 const businessesRouter = Router();
 
 businessesRouter.get('/:businessId', (req, res) => {
+  console.log('in get');
   const { businessId } = req.params;
   getSingleBusinessInfo(businessId)
     .then((business) => {
       if (!business) {
         return res.send(false);
       }
+      console.log(business);
       res.send(business);
     })
     .catch((err) => console.log(err));

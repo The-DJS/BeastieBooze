@@ -1,23 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import axios from 'axios';
+import { POSContext } from '../posContext';
 
-const Transaction = ({
-  quantity,
-  drinkName,
-  date,
-  _id: transactionId,
-  setRecentTransactions,
-}) => {
-  const removeTransaction = () => {
+const Transaction = ({ quantity, drinkName, date, _id: transactionId }) => {
+  const { removeTransaction } = useContext(POSContext);
+  const _removeTransaction = () => {
     axios
       .delete(`/routes/transactions/${transactionId}`)
       .then(() => {
-        setRecentTransactions((currentTransactions) => {
-          return currentTransactions.filter(
-            (current) => current._id !== transactionId
-          );
-        });
+        removeTransaction(transactionId);
       })
       .catch((err) => console.log(err));
   };
@@ -34,7 +26,7 @@ const Transaction = ({
         <div className="col-4">
           <button
             className="btn btn-secondary btn-sm"
-            onClick={removeTransaction}
+            onClick={_removeTransaction}
           >
             Issue Refund
           </button>

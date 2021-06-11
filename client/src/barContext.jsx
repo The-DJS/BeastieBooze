@@ -52,7 +52,11 @@ const BarContextProvider = ({ children }) => {
     if (userInfo.businessId) {
       axios
         .get(`/routes/businesses/${userInfo.businessId}`)
-        .then(({ data: barInfo }) => setCurrentBar(barInfo))
+        .then(({ data: barInfo }) => {
+          console.log('getting bar info');
+          console.log(barInfo);
+          setCurrentBar(barInfo);
+        })
         .catch((err) => console.log(err));
     }
   }, [userInfo]);
@@ -78,6 +82,9 @@ const BarContextProvider = ({ children }) => {
         toggleForm,
         bars,
         currentBar,
+        fetchBars,
+        setBars,
+        setCurrentBar,
       }}
     >
       {children}
