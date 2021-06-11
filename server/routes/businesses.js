@@ -25,6 +25,7 @@ businessesRouter.get('/:businessId', (req, res) => {
 });
 
 businessesRouter.get('/', (req, res) => {
+  console.log(req.body, 'hey im here');
   getAllBusinesses()
     .then((businesses) => {
       res.send(businesses);
@@ -82,5 +83,10 @@ businessesRouter.delete('/', (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+businessesRouter.get('/', (req, res) => {
+//get the drink id for the api
+//then add it to the menu
+})
 
 module.exports = { businessesRouter };
