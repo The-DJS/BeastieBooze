@@ -33,13 +33,12 @@ const UserSchema = new mongoose.Schema({
   businessId: mongoose.Schema.Types.ObjectId,
 });
 const DrinkSchema = new mongoose.Schema({
-  drinkId: String,
   name: String,
   instructions: String,
   ingredients: {},
   alcoholic: Boolean,
   createdBy: String,
-  soldAt: [{ type: mongoose.Schema.Types.ObjectId,  default: [] }],
+  soldAt: [{ type: mongoose.Schema.Types.ObjectId, default: [] }],
   //add a createdBy to the drinkSchema to link to Users once created
 });
 const BusinessSchema = new mongoose.Schema({
@@ -67,9 +66,9 @@ const Drink = mongoose.model('Drink', DrinkSchema);
 const Business = mongoose.model('Business', BusinessSchema);
 const Transaction = mongoose.model('Transaction', TransactionSchema);
 const addDrink = async (drink) => {
-  const { drinkName: drinkId, name, instructions, ingredients, alcoholic } = drink;
+  const { drinkName: idDrink, name, instructions, ingredients, alcoholic } = drink;
   const newDrink = new Drink({
-    drinkId,
+    //idDrink,
     name,
     instructions,
     alcoholic,

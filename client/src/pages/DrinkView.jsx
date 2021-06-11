@@ -79,7 +79,7 @@ const DrinkView = () => {
     axios
       .post('/routes/businesses/drink', {
         businessId: userInfo.businessId,
-        drinkObj: { drinkId, name, directions, ingredients, alcoholic, },
+        drinkObj: { name, directions, ingredients, alcoholic },
       })
       .then(({ data: newMenu }) => console.log(newMenu))
       .catch((err) => console.log(err));
