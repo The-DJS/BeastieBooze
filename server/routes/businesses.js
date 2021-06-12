@@ -76,7 +76,6 @@ businessesRouter.delete('/drink', (req, res) => {
 });
 
 businessesRouter.delete('/:businessId/:googleId', (req, res) => {
-  console.log('=================> Delete biz request params: ',req.params);
   const { businessId, googleId } = req.params;
   removeBusiness(businessId, googleId)
     .then((Success) => {

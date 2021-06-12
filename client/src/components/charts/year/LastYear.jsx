@@ -2,24 +2,24 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 
-const ThisMonth = () => {
+const ThisMonth = ({ data }) => {
   // Expected data format either created in axios call or formatted from the backend.
-  const data = [
-    ['2020', null],
-    ['Jan', '7000'],
-    ['Feb', '6000'],
-    ['Mar', '1000'],
-    ['Apr', '0'],
-    ['May', '0'],
-    ['Jun', '0'],
-    ['Jul', '0'],
-    ['Aug', '0'],
-    ['Sep', '0'],
-    ['Oct', '0'],
-    ['Nov', '0'],
-    ['Dev', '0'],
-    ['Total', '14000'],
-  ];
+  // const data = [
+  //   ['2020', null],
+  //   ['Jan', '7000'],
+  //   ['Feb', '6000'],
+  //   ['Mar', '1000'],
+  //   ['Apr', '0'],
+  //   ['May', '0'],
+  //   ['Jun', '0'],
+  //   ['Jul', '0'],
+  //   ['Aug', '0'],
+  //   ['Sep', '0'],
+  //   ['Oct', '0'],
+  //   ['Nov', '0'],
+  //   ['Dev', '0'],
+  //   ['Total', '14000'],
+  // ];
 
   // Get the labels from the data.
   const getLabels = (filter) => {

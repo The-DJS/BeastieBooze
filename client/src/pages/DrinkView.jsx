@@ -19,7 +19,7 @@ const DrinkView = () => {
   const [bars, setBars] = useState([]);
   const [menu, setMenu] = useState({});
 
-  console.log(aDrink);
+  // console.log(aDrink);
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
@@ -32,7 +32,7 @@ const DrinkView = () => {
     axios
       .get('/routes/businesses')
       .then(({ data }) => {
-        console.log(data, drinkId, 'yoyoyoyo');
+        // console.log(data, drinkId, 'yoyoyoyo');
         setBars(data);
         setMenu(data.menu[0]);
       })
@@ -88,10 +88,10 @@ const DrinkView = () => {
         drinkObj: { name, directions, ingredients, alcoholic },
       })
       .then(({ data: newMenu }) => {
-        console.log(newMenu);
+        // console.log(newMenu);
         fetchCurrentBar();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
   const addToMenuButton = () => {
     if (true) {
@@ -127,7 +127,7 @@ const DrinkView = () => {
       .get(`/routes/tutorial/${name}`)
       .then(({ data }) => {
         setTutorial(data);
-        console.log('DATA FROM Youtube request', data);
+        // console.log('DATA FROM Youtube request', data);
       })
       .catch();
   };
@@ -169,7 +169,7 @@ const DrinkView = () => {
               type="button"
               className="btn btn-dark drink-view-btn"
               onClick={() => {
-                console.log('toggling favorite');
+                // console.log('toggling favorite');
                 toggleFavorite(aDrink);
               }}
             >
