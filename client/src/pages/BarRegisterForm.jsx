@@ -74,8 +74,6 @@ const BarRegisterForm = () => {
       },
     };
 
-    console.log(updatedBar);
-
     if (wasUpdated) {
       axios.patch(`/routes/businesses/${currentBar._id}`, updatedBar)
         .then(({ data: bizInfo }) => {
@@ -89,7 +87,6 @@ const BarRegisterForm = () => {
   };
 
   const handleDelete = () => {
-    console.log(`businessId: ${userInfo.businessId} googleId: ${userInfo.googleId}`);
     axios.delete(`/routes/businesses/${userInfo.businessId}/${userInfo.googleId}`)
       .then(res => {
         const { data: bool } = res

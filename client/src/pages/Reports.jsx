@@ -19,6 +19,8 @@ const Reports = () => {
   } = useContext(ReportsContext);
   const { userInfo } = useContext(UserContext);
 
+  console.log(allTransactions);
+
   const handleViewChange = (e) => {
     const clickedView = e.split(' ')[0];
     if (clickedView !== chartView) {
@@ -34,7 +36,7 @@ const Reports = () => {
             {chartView} View
           </h1>
           <div className="dropdown text-center" style={{ paddingBottom: '30px' }}>
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <button className="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
               {chartView} View
             </button>
             <ul className="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="dropdownMenuButton2" onClick={(e) => handleViewChange(e.target.innerText)} >
