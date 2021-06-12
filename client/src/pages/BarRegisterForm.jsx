@@ -21,6 +21,10 @@ const BarRegisterForm = () => {
     setDescription,
     showForm,
     toggleForm,
+    currentBar,
+    setCurrentBar,
+    wasUpdated,
+    handleBarInfoChange,
   } = useContext(BarContext);
   const { userInfo, setUserInfo } = useContext(UserContext);
 
@@ -48,10 +52,51 @@ const BarRegisterForm = () => {
         toggleForm();
       })
       .catch((err) => console.error(err));
+  };
 
-    // send data for axios calls
-    // addCreation(data)
-    // e.target.reset();
+  const handleChange = () => {
+    if (userInfo.businessId && wasUpdated === false) {
+      handleBarInfoChange();
+    }
+  };
+
+  const handleUpdateBar = () => {
+    const updatedBar = {
+      name: barName,
+      contactInformation: {
+        address,
+        phone,
+        email,
+      },
+      details: {
+        hoursOfOperation,
+        description,
+      },
+    };
+
+    console.log(updatedBar);
+
+    if (wasUpdated) {
+      axios.patch(`/routes/businesses/${currentBar._id}`, updatedBar)
+        .then(({ data: bizInfo }) => {
+          setCurrentBar(bizInfo);
+          toggleForm();
+        })
+        .catch((err) => console.error(err));
+    } else {
+      alert('Please make changes to your bar information before trying to submit the form.');
+    }
+  };
+
+  const handleDelete = () => {
+    console.log(`businessId: ${userInfo.businessId} googleId: ${userInfo.googleId}`);
+    axios.delete(`/routes/businesses/${userInfo.businessId}/${userInfo.googleId}`)
+      .then(res => {
+        const { data: bool } = res
+        if (bool) {
+          setCurrentBar({});
+        }
+      });
   };
 
   return (
@@ -59,17 +104,17 @@ const BarRegisterForm = () => {
       <div>
         <div>
           <div className='create-button'>
-            <button className="btn btn-dark" type="button" onClick={toggleForm} > X </button>
+            <button className="btn btn-info" type="button" onClick={toggleForm} > X </button>
           </div>
         </div>
         <div className='form-group'>
           <form className='input-form ' onSubmit={handleSubmit}>
-          {userInfo.businessId ?
-            (
-              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Edit Your Business</h1>
-            ) : (
-              <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create Your Business</h1>
-            )}
+            {userInfo.businessId ?
+              (
+                <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Edit Your Business</h1>
+              ) : (
+                <h1 className="page-heading" style={{ paddingBottom: '0px' }}>Create Your Business</h1>
+              )}
             <div>
               <h4 className='create-form-heading'>Name Your Business *</h4>
               <input
@@ -78,7 +123,10 @@ const BarRegisterForm = () => {
                 placeholder="Fat Tuesday"
                 name="barName"
                 value={barName}
-                onChange={(e) => setBarName(e.target.value)}
+                onChange={(e) => {
+                  handleChange();
+                  setBarName(e.target.value);
+                }}
                 required
               />
             </div>
@@ -92,7 +140,10 @@ const BarRegisterForm = () => {
                 placeholder={`633 Bourbon St\nNew Orleans, LA\n70130`}
                 name="address"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => {
+                  handleChange();
+                  setAddress(e.target.value);
+                }}
                 required
               />
               <div class="form-row">
@@ -105,7 +156,10 @@ const BarRegisterForm = () => {
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     name="phone"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      handleChange();
+                      setPhone(e.target.value);
+                    }}
                     required
                   />
                   <p className='text-muted'>Required Format: 555-555-5555</p>
@@ -118,7 +172,10 @@ const BarRegisterForm = () => {
                     placeholder="help@fattuesday.com"
                     name="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      handleChange();
+                      setEmail(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -133,7 +190,10 @@ const BarRegisterForm = () => {
                 placeholder={`Monday - Thursday: 11am - midnight\n\nFriday-Saturrday: 10am-2am\n\nSunday: 10am-midnight`}
                 name='hoursOfOperation'
                 value={hoursOfOperation}
-                onChange={(e) => setHoursOfOperation(e.target.value)}
+                onChange={(e) => {
+                  handleChange();
+                  setHoursOfOperation(e.target.value);
+                }}
                 required
               />
               <h4 className='create-form-heading'>Description *</h4>
@@ -144,7 +204,10 @@ const BarRegisterForm = () => {
                 placeholder={`The Best Party in Town. Any Town.\n\nEverywhere else it’s just a Tuesday. Want in?`}
                 name='description'
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  handleChange();
+                  setDescription(e.target.value);
+                }}
                 required
               />
               <h5 className='create-form-heading'>Required *</h5>
@@ -153,13 +216,16 @@ const BarRegisterForm = () => {
               (
                 <div>
                   <div className='create-button'>
-                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Submit Changes </button>
+                    <button className="btn btn-primary" type="button" onClick={handleUpdateBar} > Submit Changes </button>
+                  </div>
+                  <div className='create-button'>
+                    <button className="btn btn-danger" type="button" onClick={handleDelete} > Delete Your Business </button>
                   </div>
                 </div>
               ) : (
                 <div>
                   <div className='create-button'>
-                    <button className="btn btn-dark" type="submit" onClick={handleSubmit} > Register </button>
+                    <button className="btn btn-primary" type="submit" onClick={handleSubmit} > Register </button>
                   </div>
                 </div>
               )}
@@ -171,7 +237,7 @@ const BarRegisterForm = () => {
         (
           <div>
             <div className='create-button'>
-              <button className="btn btn-dark" type="button" onClick={toggleForm} > Edit Your Bar </button>
+              <button className="btn btn-info" type="button" onClick={toggleForm} > Edit Your Bar </button>
             </div>
             <div className="container">
               <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
@@ -198,7 +264,7 @@ const BarRegisterForm = () => {
         ) : (
           <div>
             <div className='create-button'>
-              <button className="btn btn-dark" type="button" onClick={toggleForm} > Register Your Bar </button>
+              <button className="btn btn-primary" type="button" onClick={toggleForm} > Register Your Bar </button>
             </div>
           </div>
         )

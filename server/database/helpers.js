@@ -7,10 +7,10 @@ const { default: axios } = require('axios');
 const getUser = async (id) => {
   try {
     const user = await User.find({ googleId: id });
-    console.log(user);
+    // console.log(user);
     return user;
   } catch (err) {
-    console.log('getUser failed', err);
+    console.warn('getUser failed', err);
   }
 };
 
@@ -22,7 +22,7 @@ const createUser = async (userObj) => {
     const newUser = await User.create({ googleId, username });
     return newUser;
   } catch (err) {
-    console.log('createUser failed', err);
+    console.warn('createUser failed', err);
   }
 };
 
@@ -61,7 +61,7 @@ const getAllBusinesses = async () => {
         const mappedMenu = await Promise.all(
           business.menu.map(async (drinkId) => {
             const drink = await Drink.findById(drinkId);
-            console.log(drink);
+            // console.log(drink);
             return drink;
           })
         );
@@ -114,34 +114,27 @@ const registerBusiness = async (
     throw error;
   }
 };
-//
-const removeBusiness = async (businessId, googleId, drinkId) => {
+
+const removeBusiness = async (businessId, googleId) => {
   try {
     const user = await User.findOne({ googleId });
-    console.log(user, 'user');
     if (!user) {
       return false;
     }
     user.businessId = null;
-    //  await user.save()
+    await user.save();
     const business = await Business.findOne({ _id: businessId });
-    //  await Business.findOneAndDelete({_id : businessId})
-    const menu = business.menu.slice();
     if (!business) {
       return false;
     }
-    console.log(business, 'business');
-
-    for (drinkId of menu) {
-      const drink = await Drink.findById(drinkId);
-      const filterId = drink.soldAt.filter(
-        (currentBusinessId) => currentBusinessId.toString() !== businessId
+    await Business.deleteOne({ _id: business._id });
+    const drinks = await Drink.find();
+    for (const drink of drinks) {
+      drink.soldAt = [...drink.soldAt].filter(
+        (barId) => barId.toString() !== businessId
       );
-      console.log(filterId, 'yoyooyoyoy');
-      console.log(drink, 'drink');
+      await drink.save();
     }
-    await user.save();
-    await Business.findOneAndDelete({ _id: businessId });
     return true;
   } catch (error) {
     throw error;
@@ -253,7 +246,7 @@ const addTransaction = async (drinkId, businessId, quantity) => {
 };
 
 const removeTransaction = async (transactionId) => {
-  const transaction = await Transaction.findById(transactionId);
+  const currentBar = await Business.findById(businessId);
   if (!transaction) {
     return false;
   }
@@ -310,6 +303,21 @@ const getAllTransactions = async (businessId) => {
   }
 };
 
+const updateSingleBusinessInfo = async (businessId, newBizInfo) => {
+  const { name: newName, contactInformation: newContactInformation, details: newDetails } = newBizInfo;
+    try {
+      const newBar = await Business.findByIdAndUpdate(
+        businessId,
+        { $set: { name: newName, contactInformation: newContactInformation, details: newDetails } },
+        { new: true }
+      )
+
+      return newBar;
+    } catch {
+      throw error;
+    }
+};
+
 module.exports = {
   getUser,
   createUser,
@@ -325,4 +333,5 @@ module.exports = {
   addTransaction,
   removeTransaction,
   getAllTransactions,
+  updateSingleBusinessInfo,
 };
