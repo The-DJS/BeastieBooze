@@ -6,6 +6,7 @@ import { v4 as getKey } from 'uuid';
 import PointOfSaleTile from '../components/PointOfSaleTile';
 import Transaction from '../components/Transaction';
 import axios from 'axios';
+import { Wave } from 'react-animated-text';
 
 const PointOfSale = () => {
   const { transactions } = useContext(POSContext);

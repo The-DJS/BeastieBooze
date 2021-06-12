@@ -40,18 +40,31 @@ const BusinessDetail = () => {
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
+  const styles = {
+    card: {
+      width: '320px',
+      height: '415px',
+    },
+    cardImage: {
+      width: '100%',
+    height: undefined,
+    aspectRatio: 1,
+  }
+}
 
   return (
     <div className="container">
       <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
         {name}
       </h2>
-      <div className="row">
+      <div className="row" >
         <div className="col-md-6">
           <img
+            className="col-md-4"
             src={imageUrl ? imageUrl : <h1>loading photo...</h1>}
             className="img-fluid custom-drink-display"
             alt="bar image"
+            style={styles.cardImage}
           />
         </div>{' '}
         <div className="col-md-6 align-self-center custom-info">
