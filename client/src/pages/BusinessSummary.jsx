@@ -31,7 +31,11 @@ const BusinessSummary = () => {
       </div>
     </div>
   ) : (
-    <h1>not legal</h1>
+    <div className='container'>
+    <h1 className='page-heading'>
+      This page is restricted for people under the age of 21
+    </h1>
+  </div>
   );
 };
 
