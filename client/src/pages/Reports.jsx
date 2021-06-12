@@ -16,6 +16,10 @@ const Reports = () => {
     setChartView,
     drink,
     setDrink,
+    thisYear,
+    lastYear,
+    thisMonth,
+    lastMonth,
   } = useContext(ReportsContext);
   const { userInfo } = useContext(UserContext);
 
@@ -34,37 +38,37 @@ const Reports = () => {
             {chartView} View
           </h1>
           <div className="dropdown text-center" style={{ paddingBottom: '30px' }}>
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               {chartView} View
             </button>
-            <ul className="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="dropdownMenuButton2" onClick={(e) => handleViewChange(e.target.innerText)} >
-              <li><a className="dropdown-item" href="#">Week View</a></li>
-              <li><a className="dropdown-item" href="#">Month View</a></li>
+            <ul className="dropdown-menu" onClick={(e) => handleViewChange(e.target.innerText)} >
               <li><a className="dropdown-item" href="#">Year View</a></li>
+              <li><a className="dropdown-item" href="#">Month View</a></li>
+              {/* <li><a className="dropdown-item" href="#">Week View</a></li> */}
             </ul>
           </div>
           <div className='row'>
-            {chartView === 'Week' &&
+          {/* {chartView === 'Week' &&
               (
                 <>
-                  <ThisWeek />
                   <LastSevenDays />
+                  <ThisWeek />
                 </>
               )
-            }
+            } */}
             {chartView === 'Month' &&
               (
                 <>
-                  <ThisMonth />
-                  <Last30Days />
+                  <Last30Days data={lastMonth}/>
+                  <ThisMonth data={thisMonth}/>
                 </>
               )
             }
             {chartView === 'Year' &&
               (
                 <>
-                  <ThisYear />
-                  <LastYear />
+                  <LastYear data={lastYear}/>
+                  <ThisYear data={thisYear} />
                 </>
               )
             }

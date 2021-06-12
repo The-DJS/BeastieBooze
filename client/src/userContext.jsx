@@ -16,7 +16,7 @@ function UserContextProvider({ children }) {
 
     axios.get('/routes/users', { params: userData })
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         // console.log('===> userContext user response:', data)
         const { googleId, username, favorites, creations, businessId } = data;
         setUserInfo({ googleId, username, favorites, creations, businessId })
@@ -46,7 +46,7 @@ function UserContextProvider({ children }) {
         icon: 'success',
         title: 'Signed in successfully'
       }))
-      .catch(err => console.log(err));
+      .catch(err => console.warn(err));
   };
 
   const logoutUser = () => {
@@ -98,7 +98,7 @@ function UserContextProvider({ children }) {
       setFavoriteDrinks(prevFavs => [...prevFavs, key])
       const { googleId } = userInfo
 
-      console.log(drink)
+      // console.log(drink);
       drink.favId = drink._id || drink.idDrink
 
       axios.patch(`/routes/users/favorites/:id`, { id: googleId, favorites: drink })
@@ -110,7 +110,7 @@ function UserContextProvider({ children }) {
 
   const removeFavorite = (drink) => {
     //removes favorite
-    console.log('MADE IT TO REMOVE FAVORITES', drink)
+    // console.log('MADE IT TO REMOVE FAVORITES', drink)
     drink.favId = drink._id || drink.idDrink
     const { googleId } = userInfo
 
