@@ -216,19 +216,26 @@ const DrinkView = () => {
               console.log(aDrink.strDrink);
               console.log(bar.menu[0]);
               console.log(bar);
-              // if (bar.menu.includes(aDrink.strDrink)) {
+              //bar.menu.includes(aDrink.strDrink)
+              //arr.some(item => item.a === 'b')
+              //use some
+              //menu is an array of objects and with some we look for the key that holds the drink name and compare it to the api drink name
+              //and return the bar that has that specific drink name in their menu
+             if (bar.menu.some(menus => menus.name === aDrink.strDrink)) {
               return (
-                <li>
+                <p>
                   <Link
                     to={{
                       pathname: `/businesses/${bar._id}`,
                       state: { barObj: bar },
                     }}
+                    style={{ color: '#020202' }}
                   >
                     {bar.name}
                   </Link>
-                </li>
+                </p>
               );
+                  }
             })}
           </h5>
         </div>
