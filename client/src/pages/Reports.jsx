@@ -16,6 +16,8 @@ const Reports = () => {
     setChartView,
     drink,
     setDrink,
+    thisYear,
+    lastYear,
   } = useContext(ReportsContext);
   const { userInfo } = useContext(UserContext);
 
@@ -65,8 +67,8 @@ const Reports = () => {
             {chartView === 'Year' &&
               (
                 <>
-                  <ThisYear />
-                  <LastYear />
+                  <ThisYear data={thisYear} />
+                  <LastYear data={lastYear}/>
                 </>
               )
             }
