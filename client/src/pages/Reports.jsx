@@ -39,10 +39,10 @@ const Reports = () => {
             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               {chartView} View
             </button>
-            <ul class="dropdown-menu" onClick={(e) => handleViewChange(e.target.innerText)} >
-              <li><a className="dropdown-item" href="#">Week View</a></li>
-              <li><a className="dropdown-item" href="#">Month View</a></li>
+            <ul className="dropdown-menu" onClick={(e) => handleViewChange(e.target.innerText)} >
               <li><a className="dropdown-item" href="#">Year View</a></li>
+              <li><a className="dropdown-item" href="#">Month View</a></li>
+              <li><a className="dropdown-item" href="#">Week View</a></li>
             </ul>
           </div>
           <div className='row'>

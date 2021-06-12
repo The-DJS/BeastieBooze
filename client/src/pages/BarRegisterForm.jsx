@@ -237,24 +237,56 @@ const BarRegisterForm = () => {
               <button className="btn btn-info" type="button" onClick={toggleForm} > Edit Your Bar </button>
             </div>
             <div className="container">
-              <h2 className="page-heading" style={{ padding: '55px 0 0 0' }}>
+              <h1 className="page-heading" style={{ padding: '6rem 0 0 0', fontSize: '3rem' }}>
                 {barName}
-              </h2>
-              <div className=" align-self-center custom-info">
-                <h4 style={{ paddingBottom: '10px', textTransform: 'capitalize' }}>
-                  {description}
-                </h4>
+              </h1>
+              <div className="custom-info" style={{ paddingTop: '5rem' }}>
+                <h2 className="text-center" style={{ paddingBottom: '0', textTransform: 'capitalize', fontSize: '2rem' }}>
+                  {description.split('\n').map(descriptionLine => {
+                    return <p><strong>{descriptionLine}</strong></p>
+                  })}
+                </h2>
+                <hr style={{ paddingBottom: '2.5rem' }} />
+                <div style={{ paddingBottom: '1.5rem' }}>
+                  <h3>Address:</h3>
+                  <div style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}>
+                    {address.split('\n').map(addressLine => {
+                      return <p className="contact-info-paragraph">{addressLine}</p>
+                    })}
+                  </div>
+                </div>
+                <div style={{ paddingBottom: '1.5rem' }}>
+                  <h3>Hour of Operation:</h3>
+                  <div style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}>
+                    {hoursOfOperation.split('\n').map(hoursOfOperationLine => {
+                      return <p className="contact-info-paragraph">{hoursOfOperationLine}</p>
+                    })}
+                  </div>
+                </div>
                 <hr />
-                <h5 style={{ paddingBottom: '10px' }}>Location and Hours</h5>
-                <p>{hoursOfOperation}</p>
-                <p className="contact-info-paragraph">{address}</p>
-                <p className="contact-info-paragraph">{phone}</p>
-                <p className="contact-info-paragraph">{email}</p>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                <div style={{ paddingBottom: '20vh' }}>
+                  <h3>Contact</h3>
+                  <div style={{ paddingTop: '1rem', paddingLeft: '0.5rem' }}>
+                    <div style={{ paddingBottom: '1.5rem' }}>
+                      <h5>Phone:</h5>
+                      <p
+                        className="contact-info-paragraph"
+                        style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}
+                      >
+                        {phone}
+                      </p>
+                    </div>
+                    <div style={{ paddingBottom: '1.5rem' }}>
+                      <h5>Email:</h5>
+                      <p
+                        className="contact-info-paragraph"
+                        style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}
+                      >
+                        {email ? email : "Not provided"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
