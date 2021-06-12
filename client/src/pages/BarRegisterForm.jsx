@@ -243,7 +243,7 @@ const BarRegisterForm = () => {
               <div className="custom-info" style={{ paddingTop: '5rem' }}>
                 <h2 className="text-center" style={{ paddingBottom: '0', textTransform: 'capitalize', fontSize: '2rem' }}>
                   {description.split('\n').map(descriptionLine => {
-                    return <p><strong>{descriptionLine}</strong></p>
+                    return <p key={descriptionLine} ><strong>{descriptionLine}</strong></p>
                   })}
                 </h2>
                 <hr style={{ paddingBottom: '2.5rem' }} />
@@ -251,7 +251,7 @@ const BarRegisterForm = () => {
                   <h3>Address:</h3>
                   <div style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}>
                     {address.split('\n').map(addressLine => {
-                      return <p className="contact-info-paragraph">{addressLine}</p>
+                      return <p key={addressLine} className="contact-info-paragraph">{addressLine}</p>
                     })}
                   </div>
                 </div>
@@ -259,7 +259,7 @@ const BarRegisterForm = () => {
                   <h3>Hour of Operation:</h3>
                   <div style={{ paddingTop: '0.5rem', paddingLeft: '0.5rem' }}>
                     {hoursOfOperation.split('\n').map(hoursOfOperationLine => {
-                      return <p className="contact-info-paragraph">{hoursOfOperationLine}</p>
+                      return <p key={hoursOfOperationLine} className="contact-info-paragraph">{hoursOfOperationLine}</p>
                     })}
                   </div>
                 </div>
