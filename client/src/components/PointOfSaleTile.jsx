@@ -99,7 +99,7 @@ const PointOfSaleTile = ({ name, drinkId, removeMenuItem, menuLength }) => {
           </button> */}
           <AwesomeButton  onClick={() => setQuantity(quantity + 1)} type="primary">
             +
-          </AwesomeButton>
+        </AwesomeButton>
         </p>
         <p className="card-text">
             <AwesomeButton

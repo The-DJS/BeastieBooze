@@ -21,10 +21,25 @@ const BusinessSummary = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const styles = {
+    card: {
+      backgroundColor: '#B7E0F2',
+      borderRadius: 5,
+      padding: '2rem',
+      height:'250px',
+      width:'100%',
+    },
+    cardImage: {
+      objectFit: 'cover',
+      borderRadius: 55,
+      height:'250px',
+      width:'100%',
+  }
+}
   return isLegal ? (
     <div className="container">
       <h1 className="page-heading">Businesses</h1>
-      <div className="row">
+      <div className="row" >
         {bars.map((barObj) => (
           <BarTile key={getKey()} barObj={barObj} />
         ))}

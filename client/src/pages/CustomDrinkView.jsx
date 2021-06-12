@@ -117,7 +117,7 @@ const CustomDrinkView = () => {
           </ul>
           <br />
           <h5>Directions</h5>
-          <p>{instructions}</p>
+          <ul>{instructions}</ul>
           {userButtons()}
           <br></br>
           <br></br>
