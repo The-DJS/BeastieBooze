@@ -18,10 +18,10 @@ const Reports = () => {
     setDrink,
     thisYear,
     lastYear,
+    thisMonth,
+    lastMonth,
   } = useContext(ReportsContext);
   const { userInfo } = useContext(UserContext);
-
-  console.log(allTransactions);
 
   const handleViewChange = (e) => {
     const clickedView = e.split(' ')[0];
@@ -44,31 +44,31 @@ const Reports = () => {
             <ul className="dropdown-menu" onClick={(e) => handleViewChange(e.target.innerText)} >
               <li><a className="dropdown-item" href="#">Year View</a></li>
               <li><a className="dropdown-item" href="#">Month View</a></li>
-              <li><a className="dropdown-item" href="#">Week View</a></li>
+              {/* <li><a className="dropdown-item" href="#">Week View</a></li> */}
             </ul>
           </div>
           <div className='row'>
-            {chartView === 'Week' &&
+          {/* {chartView === 'Week' &&
               (
                 <>
-                  <ThisWeek />
                   <LastSevenDays />
+                  <ThisWeek />
                 </>
               )
-            }
+            } */}
             {chartView === 'Month' &&
               (
                 <>
-                  <ThisMonth />
-                  <Last30Days />
+                  <Last30Days data={lastMonth}/>
+                  <ThisMonth data={thisMonth}/>
                 </>
               )
             }
             {chartView === 'Year' &&
               (
                 <>
-                  <ThisYear data={thisYear} />
                   <LastYear data={lastYear}/>
+                  <ThisYear data={thisYear} />
                 </>
               )
             }

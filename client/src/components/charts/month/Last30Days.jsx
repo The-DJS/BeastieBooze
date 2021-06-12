@@ -2,17 +2,17 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 
-const Last30Days = () => {
+const Last30Days = ({ data }) => {
   // Expected data format either created in axios call or formatted from the backend.
-  const data = [
-    ['May', null],
-    ['Week 1 (Sat - Sun)', '995'],
-    ['Week 2', '1005'],
-    ['Week 3', '1125'],
-    ['Week 4', '1252'],
-    ['Week 5 (Mon - Wed)', '500'],
-    ['Total', '4877'],
-  ];
+  // const data = [
+  //   ['May', null],
+  //   ['Week 1 (Sat - Sun)', '995'],
+  //   ['Week 2', '1005'],
+  //   ['Week 3', '1125'],
+  //   ['Week 4', '1252'],
+  //   ['Week 5 (Mon - Wed)', '500'],
+  //   ['Total', '4877'],
+  // ];
 
   // Get the labels from the data.
   const getLabels = (filter) => {
