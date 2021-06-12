@@ -143,8 +143,8 @@ const BarRegisterForm = () => {
                 }}
                 required
               />
-              <div class="form-row">
-                <div class="col-6">
+              <div className="form-row">
+                <div className="col-6">
                   <h4 className='create-form-heading'>Phone *</h4>
                   <input
                     className="form-control"
