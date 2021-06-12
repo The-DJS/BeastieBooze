@@ -58,7 +58,7 @@ const BarContextProvider = ({ children }) => {
   };
 
   // Set current bar when the userInfo state changes.
-  const [currentBar, setCurrentBar] = useState(null);
+  const [currentBar, setCurrentBar] = useState({});
 
   const fetchCurrentBar = () => {
     if (userInfo.businessId) {
@@ -66,15 +66,30 @@ const BarContextProvider = ({ children }) => {
         .get(`/routes/businesses/${userInfo.businessId}`)
         .then(({ data: barInfo }) => {
           setCurrentBar(barInfo);
-          setBarName(barInfo.name);
-          setContactInformation(barInfo.contactInformation);
-          setDetails(barInfo.details);
+          setWasUpdated(false);
         })
         .catch((err) => console.log(err));
     }
   };
 
   useEffect(fetchCurrentBar, [userInfo]);
+
+  // Update bar states when the current bar is updated
+  useEffect(() => {
+    if (userInfo.businessId) {
+      const { name, contactInformation, details } = currentBar
+      setBarName(name);
+      setContactInformation(contactInformation);
+      setDetails(details);
+    }
+  }, [currentBar]);
+
+  // Track if the bar details were updated in the form
+  const [wasUpdated, setWasUpdated] = useState(null);
+  const handleBarInfoChange = () => {
+    setWasUpdated(true);
+  }
+
 
   return (
     <BarContext.Provider
@@ -95,12 +110,14 @@ const BarContextProvider = ({ children }) => {
         setDescription,
         showForm,
         toggleForm,
-        bars,
         currentBar,
+        setCurrentBar,
+        bars,
         fetchBars,
         setBars,
-        setCurrentBar,
         fetchCurrentBar,
+        wasUpdated,
+        handleBarInfoChange,
       }}
     >
       {children}

@@ -73,7 +73,7 @@ const Reports = () => {
       ) : (
         <div className='container'>
           <h1 className='page-heading'>
-            Please login or register your bar in your profile first.
+            Please login or register your bar in your profile first to view the reports page.
           </h1>
         </div>
       )
