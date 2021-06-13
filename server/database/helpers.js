@@ -245,13 +245,13 @@ const addTransaction = async (drinkId, businessId, quantity) => {
   return { ...newTransaction._doc, drinkName: drink.name };
 };
 
-const removeTransaction = async (transactionId) => {
-  const currentBar = await Business.findById(businessId);
-  if (!transaction) {
+const removeTransaction = async (transactionId, businessId) => {
+  const business = await Business.findById(businessId);
+  if (!business) {
     return false;
   }
-  const business = await Business.findById(transaction.businessId);
-  if (!business) {
+  const transaction = await Transaction.findById(transactionId);
+  if (!transaction) {
     return false;
   }
   await Transaction.findByIdAndDelete(transactionId);
@@ -304,18 +304,42 @@ const getAllTransactions = async (businessId) => {
 };
 
 const updateSingleBusinessInfo = async (businessId, newBizInfo) => {
-  const { name: newName, contactInformation: newContactInformation, details: newDetails } = newBizInfo;
-    try {
-      const newBar = await Business.findByIdAndUpdate(
-        businessId,
-        { $set: { name: newName, contactInformation: newContactInformation, details: newDetails } },
-        { new: true }
-      )
+  const {
+    name: newName,
+    contactInformation: newContactInformation,
+    details: newDetails,
+  } = newBizInfo;
+  try {
+    const newBar = await Business.findByIdAndUpdate(
+      businessId,
+      {
+        $set: {
+          name: newName,
+          contactInformation: newContactInformation,
+          details: newDetails,
+        },
+      },
+      { new: true }
+    );
 
-      return newBar;
-    } catch {
-      throw error;
-    }
+    return newBar;
+  } catch {
+    throw error;
+  }
+};
+
+const getBusinessThatServeDrink = async (drinkName) => {
+  const drink = await Drink.findOne({ name: drinkName });
+  if (!drink) {
+    return [];
+  }
+  const mappedSoldAt = await Promise.all(
+    drink.soldAt.map(async (businessId) => {
+      const business = await getSingleBusinessInfo(businessId);
+      return business;
+    })
+  );
+  return mappedSoldAt;
 };
 
 module.exports = {
@@ -334,4 +358,5 @@ module.exports = {
   removeTransaction,
   getAllTransactions,
   updateSingleBusinessInfo,
+  getBusinessThatServeDrink,
 };

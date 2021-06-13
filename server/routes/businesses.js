@@ -7,6 +7,7 @@ const {
   removeBusiness,
   getSingleBusinessInfo,
   updateSingleBusinessInfo,
+  getBusinessThatServeDrink,
 } = require('../database/helpers.js');
 
 const businessesRouter = Router();
@@ -76,7 +77,7 @@ businessesRouter.delete('/drink', (req, res) => {
 });
 
 businessesRouter.delete('/:businessId/:googleId', (req, res) => {
-  console.log('=================> Delete biz request params: ',req.params);
+  console.log('=================> Delete biz request params: ', req.params);
   const { businessId, googleId } = req.params;
   removeBusiness(businessId, googleId)
     .then((Success) => {
@@ -86,8 +87,8 @@ businessesRouter.delete('/:businessId/:googleId', (req, res) => {
 });
 
 businessesRouter.get('/', (req, res) => {
-//get the drink id for the api
-//then add it to the menu
+  //get the drink id for the api
+  //then add it to the menu
 });
 
 businessesRouter.patch('/:businessId', (req, res) => {
@@ -96,20 +97,27 @@ businessesRouter.patch('/:businessId', (req, res) => {
 
   if (businessId && bar) {
     updateSingleBusinessInfo(businessId, bar)
-      .then(updatedBar => {
+      .then((updatedBar) => {
         if (updatedBar) {
-          res.status(201).send(updatedBar)
+          res.status(201).send(updatedBar);
         } else {
           res.sendStatus(400);
         }
       })
       .catch((err) => {
         console.warn(err);
-        res.sendStatus(500)
+        res.sendStatus(500);
       });
   } else {
     res.sendStatus(400);
   }
+});
+
+businessesRouter.get('/businessesThatServeDrink/:drinkName', (req, res) => {
+  const { drinkName } = req.params;
+  getBusinessThatServeDrink(drinkName)
+    .then((businesses) => res.send(businesses))
+    .catch((err) => console.log(err));
 });
 
 module.exports = { businessesRouter };

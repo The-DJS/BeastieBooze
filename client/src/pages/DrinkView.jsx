@@ -26,13 +26,16 @@ const DrinkView = () => {
       .then(({ data }) => {
         console.log(data, 'DATA!!!');
         setADrink(data.drinks[0]);
+        // axios
+        //   .get(`/routes/businesses/businessesThatServeDrink/${aDrink.strDrink}`)
+        //   .then((foundBars) => setBars(foundBars))
+        //   .catch((err) => console.log(err));
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
 
     axios
       .get('/routes/businesses')
       .then(({ data }) => {
-        console.log(data, drinkId, 'yoyoyoyo');
         setBars(data);
         setMenu(data.menu[0]);
       })
@@ -56,30 +59,6 @@ const DrinkView = () => {
     strGlass: glass,
     strInstructions: directions,
   } = aDrink;
-
-  // const removeFromMenu = () => {
-  //   axios
-  //     .delete('/routes/businesses/drink', {
-  //       data: {
-  //         businessId: userInfo.businessId,
-  //         drinkObj: { name, directions, ingredients, alcoholic },
-  //       },
-  //     })
-  //     .then(({ data: newMenu }) => console.log(newMenu))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const removeFromMenuButton = () => {
-  //   if (true) {
-  //     return (
-  //       <span className="remove-from-menu-button" onClick={removeFromMenu}>
-  //         <button type="button" className="btn btn-dark">
-  //           Remove from Menu
-  //         </button>
-  //       </span>
-  //     );
-  //   }
-  // };
 
   const addToMenu = () => {
     axios
@@ -213,15 +192,12 @@ const DrinkView = () => {
           <h5>Bars</h5>
           <h5>
             {bars.map((bar) => {
-              console.log(aDrink.strDrink);
-              console.log(bar.menu[0]);
               console.log(bar);
-              // if (bar.menu.includes(aDrink.strDrink)) {
               return (
                 <li>
                   <Link
                     to={{
-                      pathname: `/businesses/${bar._id}`,
+                      pathname: `/businesses/${bar.id}`,
                       state: { barObj: bar },
                     }}
                   >

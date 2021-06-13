@@ -1,5 +1,9 @@
 const express = require('express');
-const { addTransaction, removeTransaction, getAllTransactions } = require('../database/helpers');
+const {
+  addTransaction,
+  removeTransaction,
+  getAllTransactions,
+} = require('../database/helpers');
 
 const { Router } = express;
 const transactionsRouter = Router();
@@ -11,9 +15,9 @@ transactionsRouter.post('/', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-transactionsRouter.delete('/:transactionId', (req, res) => {
-  const { transactionId } = req.params;
-  removeTransaction(transactionId)
+transactionsRouter.delete('/:transactionId/:businessId', (req, res) => {
+  const { transactionId, businessId } = req.params;
+  removeTransaction(transactionId, businessId)
     .then((removed) => res.send(removed))
     .catch((err) => console.log(err));
 });
@@ -23,7 +27,7 @@ transactionsRouter.get('/:businessId', (req, res) => {
   getAllTransactions(businessId)
     .then((transactions) => {
       if (transactions) {
-        res.status(200).send(transactions)
+        res.status(200).send(transactions);
       } else {
         res.sendStatus(400);
       }
