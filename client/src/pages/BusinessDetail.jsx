@@ -35,6 +35,7 @@ const BusinessDetail = () => {
           }}
         >
           <img
+            className="col-md-4"
             src={imageUrl ? imageUrl : <h1>loading photo...</h1>}
             className="img-fluid custom-drink-display"
             alt="bar image"

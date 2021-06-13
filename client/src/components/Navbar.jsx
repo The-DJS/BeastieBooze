@@ -14,7 +14,7 @@ const Navbar = () => {
   const { userInfo, isLoggedIn } = useContext(UserContext);
   const { fetchCurrentBar } = useContext(BarContext);
   const { username } = userInfo;
-  console.log(userInfo);
+  // console.log(userInfo);
   //state to hold collapsing navbar
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const handleNavCollapse = () => {

@@ -31,7 +31,6 @@ const Profile = () => {
       <UserFavorites favorites={favorites} />
     </div>
     <div>
-      <h3 className='profile-heading'> Create your bar </h3>
       <BarRegisterForm userInfo={userInfo} />
     </div>
   </div>

@@ -19,7 +19,7 @@ const DrinkView = () => {
   const [bars, setBars] = useState([]);
   const [menu, setMenu] = useState({});
 
-  console.log(aDrink);
+  // console.log(aDrink);
   useEffect(() => {
     axios
       .get(`/routes/drink/${drinkId}`)
@@ -36,6 +36,7 @@ const DrinkView = () => {
     axios
       .get('/routes/businesses')
       .then(({ data }) => {
+        // console.log(data, drinkId, 'yoyoyoyo');
         setBars(data);
         setMenu(data.menu[0]);
       })
@@ -67,10 +68,10 @@ const DrinkView = () => {
         drinkObj: { name, directions, ingredients, alcoholic },
       })
       .then(({ data: newMenu }) => {
-        console.log(newMenu);
+        // console.log(newMenu);
         fetchCurrentBar();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
   const addToMenuButton = () => {
     if (true) {
@@ -106,7 +107,7 @@ const DrinkView = () => {
       .get(`/routes/tutorial/${name}`)
       .then(({ data }) => {
         setTutorial(data);
-        console.log('DATA FROM Youtube request', data);
+        // console.log('DATA FROM Youtube request', data);
       })
       .catch();
   };
@@ -148,7 +149,7 @@ const DrinkView = () => {
               type="button"
               className="btn btn-dark drink-view-btn"
               onClick={() => {
-                console.log('toggling favorite');
+                // console.log('toggling favorite');
                 toggleFavorite(aDrink);
               }}
             >
@@ -193,18 +194,26 @@ const DrinkView = () => {
           <h5>
             {bars.map((bar) => {
               console.log(bar);
-              return (
-                <li>
-                  <Link
-                    to={{
-                      pathname: `/businesses/${bar.id}`,
-                      state: { barObj: bar },
-                    }}
-                  >
-                    {bar.name}
-                  </Link>
-                </li>
-              );
+              //bar.menu.includes(aDrink.strDrink)
+              //arr.some(item => item.a === 'b')
+              //use some
+              //menu is an array of objects and with some we look for the key that holds the drink name and compare it to the api drink name
+              //and return the bar that has that specific drink name in their menu
+              if (bar.menu.some((menus) => menus.name === aDrink.strDrink)) {
+                return (
+                  <p>
+                    <Link
+                      to={{
+                        pathname: `/businesses/${bar.id}`,
+                        state: { barObj: bar },
+                      }}
+                      style={{ color: '#020202' }}
+                    >
+                      {bar.name}
+                    </Link>
+                  </p>
+                );
+              }
             })}
           </h5>
         </div>

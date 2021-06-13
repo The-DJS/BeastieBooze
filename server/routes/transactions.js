@@ -24,18 +24,22 @@ transactionsRouter.delete('/:transactionId/:businessId', (req, res) => {
 
 transactionsRouter.get('/:businessId', (req, res) => {
   const { businessId } = req.params;
-  getAllTransactions(businessId)
-    .then((transactions) => {
-      if (transactions) {
-        res.status(200).send(transactions);
-      } else {
-        res.sendStatus(400);
-      }
-    })
-    .catch((err) => {
-      console.warn(err);
-      res.sendStatus(500);
-    });
+  if (businessId) {
+    getAllTransactions(businessId)
+      .then((transactions) => {
+        if (transactions) {
+          res.status(200).send(transactions);
+        } else {
+          res.sendStatus(400);
+        }
+      })
+      .catch((err) => {
+        console.warn(err);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 module.exports = { transactionsRouter };

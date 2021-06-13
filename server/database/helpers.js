@@ -263,7 +263,7 @@ const removeTransaction = async (transactionId, businessId) => {
 };
 
 const getAllTransactions = async (businessId) => {
-  const business = await getSingleBusinessInfo(businessId);
+  const business = await Business.findById(businessId);
   if (business) {
     if (business.transactions) {
       const transactionIdsArr = business.transactions;
