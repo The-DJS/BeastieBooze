@@ -26,6 +26,10 @@ const DrinkView = () => {
       .then(({ data }) => {
         console.log(data, 'DATA!!!');
         setADrink(data.drinks[0]);
+        // axios
+        //   .get(`/routes/businesses/businessesThatServeDrink/${aDrink.strDrink}`)
+        //   .then((foundBars) => setBars(foundBars))
+        //   .catch((err) => console.log(err));
       })
       .catch((err) => console.error('THIS IS OUR ERROR!', err, drinkId));
 
@@ -56,30 +60,6 @@ const DrinkView = () => {
     strGlass: glass,
     strInstructions: directions,
   } = aDrink;
-
-  // const removeFromMenu = () => {
-  //   axios
-  //     .delete('/routes/businesses/drink', {
-  //       data: {
-  //         businessId: userInfo.businessId,
-  //         drinkObj: { name, directions, ingredients, alcoholic },
-  //       },
-  //     })
-  //     .then(({ data: newMenu }) => console.log(newMenu))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const removeFromMenuButton = () => {
-  //   if (true) {
-  //     return (
-  //       <span className="remove-from-menu-button" onClick={removeFromMenu}>
-  //         <button type="button" className="btn btn-dark">
-  //           Remove from Menu
-  //         </button>
-  //       </span>
-  //     );
-  //   }
-  // };
 
   const addToMenu = () => {
     axios
@@ -213,29 +193,27 @@ const DrinkView = () => {
           <h5>Bars</h5>
           <h5>
             {bars.map((bar) => {
-              console.log(aDrink.strDrink);
-              console.log(bar.menu[0]);
               console.log(bar);
               //bar.menu.includes(aDrink.strDrink)
               //arr.some(item => item.a === 'b')
               //use some
               //menu is an array of objects and with some we look for the key that holds the drink name and compare it to the api drink name
               //and return the bar that has that specific drink name in their menu
-             if (bar.menu.some(menus => menus.name === aDrink.strDrink)) {
-              return (
-                <p>
-                  <Link
-                    to={{
-                      pathname: `/businesses/${bar._id}`,
-                      state: { barObj: bar },
-                    }}
-                    style={{ color: '#020202' }}
-                  >
-                    {bar.name}
-                  </Link>
-                </p>
-              );
-                  }
+              if (bar.menu.some((menus) => menus.name === aDrink.strDrink)) {
+                return (
+                  <p>
+                    <Link
+                      to={{
+                        pathname: `/businesses/${bar.id}`,
+                        state: { barObj: bar },
+                      }}
+                      style={{ color: '#020202' }}
+                    >
+                      {bar.name}
+                    </Link>
+                  </p>
+                );
+              }
             })}
           </h5>
         </div>

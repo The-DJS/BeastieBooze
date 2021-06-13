@@ -50,6 +50,7 @@ const ImgWrapper = ({ drink = {}, barObj }) => {
         }
         src={source}
         alt={name || barObj.name}
+        style={{ width: '300px', height: '300px', objectFit: 'cover' }}
       />
       <div className={hovering ? 'wrap-text' : 'wrap-text hidden'}>
         {name || barObj.name}

@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import { POSContext } from '../posContext';
+import { UserContext } from '../userContext';
 
 const Transaction = ({ quantity, drinkName, date, _id: transactionId }) => {
   const { removeTransaction } = useContext(POSContext);
+  const { userInfo } = useContext(UserContext);
   const _removeTransaction = () => {
     axios
-      .delete(`/routes/transactions/${transactionId}`)
+      .delete(`/routes/transactions/${transactionId}/${userInfo.businessId}`)
       .then(() => {
         removeTransaction(transactionId);
       })
